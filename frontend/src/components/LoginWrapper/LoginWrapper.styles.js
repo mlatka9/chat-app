@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
   max-width: 475px;
   margin: auto;
   box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.15), 0 0 40px rgba(0, 0, 0, 0.1);
+  background-color: ${({ theme }) => theme.color.white};
   h1,
   h2 {
     color: ${({ theme }) => theme.color.veryDarkGrey};

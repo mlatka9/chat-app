@@ -4,6 +4,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 14px;
+
   span {
     font-size: ${({ theme }) => theme.fontSize.s};
     color: ${({ theme }) => theme.color.red};
@@ -26,6 +27,7 @@ export const InputWrapper = styled.div`
     border-radius: 8px;
     padding-left: 42px;
     font-size: ${({ theme }) => theme.fontSize.m};
+    background-color: ${({ theme }) => theme.color.white};
     &:focus {
       outline: 1px solid ${({ theme }) => theme.color.veryDarkGrey};
       color: ${({ theme }) => theme.color.veryDarkGrey};

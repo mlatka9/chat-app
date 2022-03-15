@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const subscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user);
         setCurrentUser(user);
       }
     });
@@ -38,13 +37,11 @@ export const AuthProvider = ({ children }) => {
 
   const readFromBackend = async () => {
     const idToken = await auth.currentUser.getIdToken(true);
-    console.log(idToken);
     const data = await axios.get('http://localhost:5000/api/random', {
       headers: {
         authorization: `Bearer ${idToken}`,
       },
     });
-    console.log(data);
   };
 
   const value = {

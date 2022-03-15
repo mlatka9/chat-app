@@ -9,7 +9,6 @@ const FormField = ({
   type = 'text',
   icon,
 }) => {
-  console.log(icon);
   return (
     <Wrapper>
       <InputWrapper error={error}>
