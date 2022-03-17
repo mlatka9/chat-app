@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import styled from 'styled-components';
 import LoginWrapper from 'components/LoginWrapper/LoginWrapper';
@@ -7,6 +7,12 @@ import FormField from 'components/FormField/FormField';
 import Button from 'components/Button/Button';
 import SocialsBox from 'components/SocialsBox/SocialsBox';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
+
+const LoginErrorMessage = styled(ErrorMessage)`
+  text-align: center;
+`;
 
 export const StyledForm = styled.form`
   margin: 28px 0 32px;
@@ -34,6 +40,9 @@ const headers = {
 };
 
 const Signup = () => {
+  const [errorMessage, setErrorMessage] = useState();
+  const { signup, currentUser } = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -44,7 +53,24 @@ const Signup = () => {
     password: '',
   });
 
-  const onSubmit = async (data) => {};
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate('/');
+    }
+  }, [currentUser, navigate]);
+
+  const onSubmit = async (data) => {
+    const { email, password } = data;
+    try {
+      await signup(email, password);
+      console.log('USER created');
+    } catch (err) {
+      console.log({ err });
+      setErrorMessage(err.message);
+    }
+  };
 
   return (
     <LoginWrapper header={headers.mainHeader} subHeader={headers.subHeader}>
@@ -66,7 +92,13 @@ const Signup = () => {
         <FormField
           label="password"
           type="password"
-          options={{ required: 'Password is required' }}
+          options={{
+            required: 'Password is required',
+            minLength: {
+              value: 6,
+              message: 'Password must be at least 6 characters long ',
+            },
+          }}
           error={errors.password?.message}
           register={register}
           icon="lock"
@@ -88,6 +120,9 @@ const Signup = () => {
         ></FormField>
 
         <Button type="submit">Start coding now </Button>
+        {errorMessage ? (
+          <LoginErrorMessage>{errorMessage}</LoginErrorMessage>
+        ) : null}
       </StyledForm>
 
       <SocialsBox />

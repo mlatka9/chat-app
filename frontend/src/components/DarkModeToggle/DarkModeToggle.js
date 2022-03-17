@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import { Wrapper } from './DarkModeToggle.styles';
+import useDarkMode from 'hooks/useDarkMode';
 
-const DarkModeToggle = ({ theme, themeToggler }) => {
-  //   const [isLight, setIsLight] = useState(theme === '');
+const DarkModeToggle = () => {
+  const { theme, themeToggler } = useDarkMode();
 
   const handleOnChange = () => {
-    // setIsLight(!isLight);
     themeToggler();
   };
 

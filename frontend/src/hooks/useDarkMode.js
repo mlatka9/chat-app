@@ -1,6 +1,8 @@
-import { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useContext } from 'react';
 
-const useDarkMode = () => {
+const DarkModeContext = React.createContext();
+
+export const DarkModeProvider = ({ children }) => {
   const [theme, setTheme] = useState('light');
 
   const setMode = (mode) => {
@@ -14,7 +16,11 @@ const useDarkMode = () => {
 
   useLayoutEffect(() => {
     const localTheme = localStorage.getItem('theme');
-    localTheme && setTheme(localTheme);
+
+    if (localTheme) {
+      setTheme(localTheme);
+      return;
+    }
     const isUserPreferDarkScheme = window.matchMedia(
       '(prefers-color-scheme: dark)'
     ).matches;
@@ -23,7 +29,20 @@ const useDarkMode = () => {
     }
   }, []);
 
-  return [theme, themeToggler];
+  const value = {
+    theme,
+    themeToggler,
+  };
+
+  return (
+    <DarkModeContext.Provider value={value}>
+      {children}
+    </DarkModeContext.Provider>
+  );
+};
+
+const useDarkMode = () => {
+  return useContext(DarkModeContext);
 };
 
 export default useDarkMode;

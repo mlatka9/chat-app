@@ -6,8 +6,19 @@ import Button from 'components/Button/Button';
 import SocialsBox from 'components/SocialsBox/SocialsBox';
 import { LoginParapgraph } from './Signup';
 import { Link } from 'react-router-dom';
+import useAuth from 'hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
+import styled from 'styled-components';
+
+const LoginErrorMessage = styled(ErrorMessage)`
+  text-align: center;
+`;
 
 const Login = () => {
+  const { loginUser, currentUser } = useAuth();
+  const [errorMessage, setErrorMessage] = useState();
   const {
     register,
     handleSubmit,
@@ -16,8 +27,24 @@ const Login = () => {
     email: '',
     password: '',
   });
+  const navigate = useNavigate();
 
-  const onSubmit = async (data) => {};
+  const onSubmit = async (data) => {
+    const { email, password } = data;
+    try {
+      await loginUser(email, password);
+      console.log('USER logged');
+    } catch (err) {
+      console.log(err);
+      setErrorMessage(err.message);
+    }
+  };
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate('/profile');
+    }
+  }, [currentUser, navigate]);
 
   return (
     <LoginWrapper header="Login">
@@ -46,6 +73,9 @@ const Login = () => {
         ></FormField>
 
         <Button type="submit">Login</Button>
+        {errorMessage ? (
+          <LoginErrorMessage>{errorMessage}</LoginErrorMessage>
+        ) : null}
       </StyledForm>
 
       <SocialsBox />

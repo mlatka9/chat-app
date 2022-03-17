@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InputWrapper, Wrapper } from './FormField.styles';
+import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
 
 const FormField = ({
   label,
@@ -20,7 +21,7 @@ const FormField = ({
         <FontAwesomeIcon icon={icon} />
       </InputWrapper>
 
-      {error && <span>{error}</span>}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
     </Wrapper>
   );
 };
