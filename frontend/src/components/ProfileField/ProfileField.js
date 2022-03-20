@@ -4,6 +4,11 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 220px 1fr;
   padding: 28px 50px;
+  img {
+    height: 72px;
+    width: 72px;
+    border-radius: 8px;
+  }
 `;
 
 const FieldName = styled.span`

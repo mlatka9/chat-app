@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   max-width: 850px;
 `;
 
-export const EditWrapper = styled.div`
+export const EditWrapper = styled.form`
   padding: 30px 50px;
   border: 1px solid ${({ theme }) => theme.color.veryLightGrey};
   border-radius: 12px;

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from 'components/Header/Header';
 import { useEffect } from 'react';
 import InfoHeader from 'components/InfoHeader/InfoHeader';
+import { useState } from 'react';
 
 import ProfileField from 'components/ProfileField/ProfileField';
 import {
@@ -15,7 +16,7 @@ import {
 } from './Profile.styles';
 
 const Profile = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, userDetails } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,8 +45,8 @@ const Profile = () => {
           </FirstRow>
           <ProfileField name="photo" value={currentUser.photoURL} hasImage />
           <ProfileField name="name" value={currentUser.displayName} />
-          <ProfileField name="bio" value={currentUser.bio} />
-          <ProfileField name="phone" value={currentUser.phoneNumber} />
+          <ProfileField name="bio" value={userDetails?.bio} />
+          <ProfileField name="phone" value={userDetails?.phoneNumber} />
           <ProfileField name="email" value={currentUser.email} />
           <ProfileField name="password" value="********" />
         </DetailsTable>

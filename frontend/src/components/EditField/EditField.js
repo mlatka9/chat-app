@@ -30,7 +30,14 @@ const StyledLabel = styled.label`
   display: block;
 `;
 
-const EditField = ({ label, isTextarea }) => {
+const EditField = ({
+  label,
+  isTextarea,
+  type = 'text',
+  register,
+  options,
+  error,
+}) => {
   return (
     <div>
       <StyledLabel htmlFor={label}>{label}</StyledLabel>
@@ -39,11 +46,14 @@ const EditField = ({ label, isTextarea }) => {
           as="textarea"
           id={label}
           placeholder={`Enter your ${label}...`}
+          {...register(label, options)}
         ></StyledTextarea>
       ) : (
         <StyledInput
+          type={type}
           id={label}
           placeholder={`Enter your ${label}...`}
+          {...register(label, options)}
         ></StyledInput>
       )}
     </div>

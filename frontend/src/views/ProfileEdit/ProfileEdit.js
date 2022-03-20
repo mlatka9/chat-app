@@ -11,16 +11,45 @@ import {
   StyledBackLink,
   Wrapper,
 } from './ProfileEdit.styles';
+import { useForm } from 'react-hook-form';
 
 const ProfileEdit = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, updateUserProfile, userDetails } = useAuth();
+
   const navigate = useNavigate();
+
+  // const [errorMessage, setErrorMessage] = useState();
+
+  console.log(userDetails);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      name: currentUser?.displayName,
+      bio: userDetails?.bio,
+      phone: userDetails?.phoneNumber,
+      email: currentUser?.email,
+      password: '',
+    },
+  });
 
   useEffect(() => {
     if (!currentUser) {
       navigate('/login');
     }
   }, [currentUser, navigate]);
+
+  const onSubmit = async (data) => {
+    try {
+      await updateUserProfile(data);
+    } catch (err) {
+      console.log(err);
+    }
+    navigate(-1);
+  };
 
   if (!currentUser) {
     return null;
@@ -31,20 +60,47 @@ const ProfileEdit = () => {
 
       <Wrapper>
         <StyledBackLink to="/profile">Back</StyledBackLink>
-        <EditWrapper>
+        <EditWrapper onSubmit={handleSubmit(onSubmit)}>
           <InfoHeader>
             <h1>Change info</h1>
             <p>Changes will be reflected to every services</p>
           </InfoHeader>
           <ChangePhoto>
-            <img src="#" />
+            <img src={currentUser.photoURL} alt={currentUser.email} />
             <button>change photo</button>
           </ChangePhoto>
-          <EditField label="name" />
-          <EditField label="bio" isTextarea />
-          <EditField label="phone" />
-          <EditField label="email" />
-          <EditField label="password" />
+          <EditField
+            label="name"
+            register={register}
+            options={{
+              minLength: {
+                value: 5,
+                message: 'password must have at least 5 characters',
+              },
+            }}
+          />
+          <EditField label="bio" register={register} isTextarea />
+          <EditField
+            label="phone"
+            register={register}
+            options={{
+              // pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              minLength: 6,
+              message: 'invalid phone number',
+            }}
+          />
+          <EditField
+            label="email"
+            register={register}
+            options={{
+              required: 'Email is required',
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: 'invalid email address',
+              },
+            }}
+          />
+          <EditField label="password" register={register} type="password" />
           <Button>Save</Button>
         </EditWrapper>
       </Wrapper>
