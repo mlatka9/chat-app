@@ -79,5 +79,5 @@ export const FileInputWrapper = styled.div`
 
 export const StyledSpan = styled.span`
   margin-left: 20px;
-  color: ${({ theme }) => theme.color.white};
+  color: ${({ theme }) => theme.color.darkGrey};
 `;
