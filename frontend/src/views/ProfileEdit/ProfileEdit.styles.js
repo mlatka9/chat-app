@@ -76,3 +76,8 @@ export const FileInputWrapper = styled.div`
     border-radius: 2px;
   }
 `;
+
+export const StyledSpan = styled.span`
+  margin-left: 20px;
+  color: ${({ theme }) => theme.color.white};
+`;

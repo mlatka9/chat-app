@@ -33,7 +33,6 @@ const Login = () => {
     const { email, password } = data;
     try {
       await loginUser(email, password);
-      console.log('USER logged');
     } catch (err) {
       console.log(err);
       setErrorMessage(err.message);

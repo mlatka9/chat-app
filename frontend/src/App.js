@@ -20,10 +20,7 @@ const Content = styled.div`
 `;
 
 function App() {
-  const { currentUser } = useAuth();
   const { theme } = useDarkMode();
-
-  // console.log(currentUser);
 
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>

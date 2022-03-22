@@ -12,6 +12,7 @@ import {
   Wrapper,
   FileInputWrapper,
   ProfileEditWrapper,
+  StyledSpan,
 } from './ProfileEdit.styles';
 import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -38,7 +39,6 @@ const ProfileEdit = () => {
   });
 
   const watchPhoto = watch('photo', {});
-  console.log(watchPhoto);
 
   useEffect(() => {
     if (!currentUser) {
@@ -47,7 +47,6 @@ const ProfileEdit = () => {
   }, [currentUser, navigate]);
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       setIsUpdating(true);
       await updateUserProfile(data);
@@ -136,7 +135,8 @@ const ProfileEdit = () => {
               ></EditField>
             </>
           ) : null}
-          <Button>Save</Button> {isUpdating && <span>updating...</span>}
+          <Button>Save</Button>{' '}
+          {isUpdating && <StyledSpan>updating...</StyledSpan>}
         </EditWrapper>
       </ProfileEditWrapper>
     </Wrapper>

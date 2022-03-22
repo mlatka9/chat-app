@@ -65,7 +65,6 @@ const Signup = () => {
     const { email, password } = data;
     try {
       await signup(email, password);
-      console.log('USER created');
     } catch (err) {
       console.log({ err });
       setErrorMessage(err.message);

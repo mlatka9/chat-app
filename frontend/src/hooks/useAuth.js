@@ -28,7 +28,6 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const subscribe = onAuthStateChanged(auth, (user) => {
-      console.log(user);
       setCurrentUser(user);
       if (user) {
         getUserDetails(user.uid).then((details) => {
@@ -90,11 +89,16 @@ export const AuthProvider = ({ children }) => {
 
   const signUpWithGoogle = async () => {
     const response = await signInWithPopup(auth, provider);
-    console.log(response);
-    await setDoc(doc(db, 'users', response.user.uid), {
-      bio: '',
-      phoneNumber: '',
-    });
+    const docRef = doc(db, 'users', response.user.uid);
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+      await setDoc(doc(db, 'users', response.user.uid), {
+        bio: '',
+        phoneNumber: '',
+      });
+    }
+
     // Do backend'u
     // const credential = GoogleAuthProvider.credentialFromResult(result);
     // const token = credential.accessToken;
@@ -102,7 +106,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updateUserProfile = async (dataToUpdate) => {
-    console.log('dataToUpdate', dataToUpdate);
     const {
       name: displayName,
       phone: phoneNumber,
@@ -116,7 +119,6 @@ export const AuthProvider = ({ children }) => {
       const fileRef = ref(getStorage(), currentUser.uid);
       await uploadBytes(fileRef, photo[0]);
       const photoURL = await getDownloadURL(fileRef);
-      console.log('photoURL', photoURL);
       await updateProfile(auth.currentUser, {
         photoURL,
       });
