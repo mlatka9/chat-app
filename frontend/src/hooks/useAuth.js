@@ -8,12 +8,14 @@ import {
   updateProfile,
   reauthenticateWithCredential,
   EmailAuthProvider,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from 'firebase/auth';
 import { db } from '../firebase';
 import { doc, setDoc, updateDoc, getDoc } from 'firebase/firestore';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { auth } from '../firebase';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import axios from 'axios';
 import { CustomFirebaseError } from 'errors/CustomFirebaseError';
 
@@ -25,26 +27,18 @@ export const AuthProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState(null);
 
   useEffect(() => {
-    const subscribe = onAuthStateChanged(auth, async (user) => {
+    const subscribe = onAuthStateChanged(auth, (user) => {
       console.log(user);
       setCurrentUser(user);
       if (user) {
-        const details = await getUserDetails(user.uid);
-        console.log(details);
-        setUserDetails(details);
+        getUserDetails(user.uid).then((details) => {
+          setUserDetails(details);
+        });
       }
     });
 
     return subscribe;
   }, []);
-
-  // useEffect(() => {
-  //   getUserDetails()
-  //     .then((user) => {
-  //       setUserDetails(user.data());
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, [getUserDetails]);
 
   const signup = async (email, password) => {
     try {
@@ -59,11 +53,11 @@ export const AuthProvider = ({ children }) => {
         phoneNumber: '',
       });
 
-      await updateProfile(response.user, {
-        photoURL: `https://picsum.photos/id/${
-          Math.floor(Math.random() * 99) + 1
-        }/200/200`,
-      });
+      // await updateProfile(response.user, {
+      //   photoURL: `https://picsum.photos/id/${
+      //     Math.floor(Math.random() * 99) + 1
+      //   }/200/200`,
+      // });
     } catch (err) {
       if (err.code === 'auth/email-already-in-use') {
         throw new CustomFirebaseError(
@@ -95,38 +89,56 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signUpWithGoogle = async () => {
-    const result = await signInWithPopup(auth, provider);
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    const user = result.user;
+    const response = await signInWithPopup(auth, provider);
+    console.log(response);
+    await setDoc(doc(db, 'users', response.user.uid), {
+      bio: '',
+      phoneNumber: '',
+    });
+    // Do backend'u
+    // const credential = GoogleAuthProvider.credentialFromResult(result);
+    // const token = credential.accessToken;
+    // const user = result.user;
   };
 
   const updateUserProfile = async (dataToUpdate) => {
-    console.log(dataToUpdate);
+    console.log('dataToUpdate', dataToUpdate);
     const {
       name: displayName,
       phone: phoneNumber,
       bio,
       email,
       password,
+      photo,
     } = dataToUpdate;
 
-    await updateProfile(auth.currentUser, {
-      displayName,
-    });
+    if (photo[0]) {
+      const fileRef = ref(getStorage(), currentUser.uid);
+      await uploadBytes(fileRef, photo[0]);
+      const photoURL = await getDownloadURL(fileRef);
+      console.log('photoURL', photoURL);
+      await updateProfile(auth.currentUser, {
+        photoURL,
+      });
+    }
 
-    const userRef = doc(db, 'users', currentUser.uid);
+    if (displayName !== currentUser.displayName) {
+      await updateProfile(auth.currentUser, {
+        displayName,
+      });
+    }
 
     const fieldToUpdate = {
-      ...(phoneNumber ? { phoneNumber } : {}),
-      ...(bio ? { bio } : {}),
+      ...(phoneNumber !== userDetails.phoneNumber ? { phoneNumber } : {}),
+      ...(bio !== userDetails.bio ? { bio } : {}),
     };
 
-    console.log('FIELDS TO UPDATE:', fieldToUpdate);
-
-    await updateDoc(userRef, fieldToUpdate);
-    const details = await getUserDetails(currentUser.uid);
-    setUserDetails(details);
+    if (Object.keys(fieldToUpdate).length > 0) {
+      const userRef = doc(db, 'users', currentUser.uid);
+      await updateDoc(userRef, fieldToUpdate);
+      const details = await getUserDetails(currentUser.uid);
+      setUserDetails(details);
+    }
 
     if (email !== currentUser.email || password) {
       const providedPassword = prompt('password: ');
@@ -137,7 +149,7 @@ export const AuthProvider = ({ children }) => {
       await reauthenticateWithCredential(currentUser, credential);
     }
 
-    if (email !== auth.currentUser) {
+    if (email !== currentUser.email) {
       await updateEmail(auth.currentUser, email);
     }
 
@@ -162,13 +174,13 @@ export const AuthProvider = ({ children }) => {
 
   const value = {
     currentUser,
+    userDetails,
     signup,
     signUpWithGoogle,
     readFromBackend,
     logoutUser,
     loginUser,
     updateUserProfile,
-    userDetails,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

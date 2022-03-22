@@ -12,6 +12,7 @@ import {
   faCircleUser,
   faArrowRightFromBracket,
   faCaretDown,
+  faAngleLeft,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -23,5 +24,6 @@ library.add(
   faUserGroup,
   faCircleUser,
   faArrowRightFromBracket,
-  faCaretDown
+  faCaretDown,
+  faAngleLeft
 );

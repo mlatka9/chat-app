@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from 'components/Header/Header';
 import { useEffect } from 'react';
 import InfoHeader from 'components/InfoHeader/InfoHeader';
-import { useState } from 'react';
+import imagePlaceholder from 'assets/image-placeholder.jpeg';
 
 import ProfileField from 'components/ProfileField/ProfileField';
 import {
@@ -13,6 +13,7 @@ import {
   StyledLink,
   SubTitle,
   Wrapper,
+  ProfileWrapper,
 } from './Profile.styles';
 
 const Profile = () => {
@@ -30,9 +31,9 @@ const Profile = () => {
   }
 
   return (
-    <>
+    <Wrapper>
       <Header />
-      <Wrapper>
+      <ProfileWrapper>
         <MainTitle>Personal info</MainTitle>
         <SubTitle>Basic info, like your name and photo</SubTitle>
         <DetailsTable>
@@ -43,15 +44,19 @@ const Profile = () => {
             </InfoHeader>
             <StyledLink to="/profile-edit">Edit</StyledLink>
           </FirstRow>
-          <ProfileField name="photo" value={currentUser.photoURL} hasImage />
+          <ProfileField
+            name="photo"
+            value={currentUser.photoURL || imagePlaceholder}
+            hasImage
+          />
           <ProfileField name="name" value={currentUser.displayName} />
           <ProfileField name="bio" value={userDetails?.bio} />
           <ProfileField name="phone" value={userDetails?.phoneNumber} />
           <ProfileField name="email" value={currentUser.email} />
           <ProfileField name="password" value="********" />
         </DetailsTable>
-      </Wrapper>
-    </>
+      </ProfileWrapper>
+    </Wrapper>
   );
 };
 

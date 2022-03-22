@@ -37,7 +37,7 @@ export const darkTheme = {
     lightGrey: '#CCC',
     blue: '#2F80ED',
     white: 'rgb(33,37,43)',
-    red: '#d42c20',
+    red: '#ff6e63',
     yellow: 'yellow',
     black: '#FFF',
     veryLightGrey: '#334',

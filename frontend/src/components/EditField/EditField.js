@@ -1,4 +1,12 @@
 import styled from 'styled-components';
+import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
+
+const Wrapper = styled.div`
+  textarea {
+    min-height: 200px;
+    max-height: 400px;
+  }
+`;
 
 const StyledInput = styled.input`
   display: block;
@@ -11,15 +19,12 @@ const StyledInput = styled.input`
   width: 100%;
   max-width: 420px;
   background-color: ${({ theme }) => theme.color.white};
+  resize: vertical;
+
   &:focus {
     outline: 2px solid ${({ theme }) => theme.color.veryDarkGrey};
     color: ${({ theme }) => theme.color.veryDarkGrey};
   }
-`;
-
-const StyledTextarea = styled(StyledInput)`
-  resize: none;
-  height: 200px;
 `;
 
 const StyledLabel = styled.label`
@@ -39,24 +44,17 @@ const EditField = ({
   error,
 }) => {
   return (
-    <div>
+    <Wrapper>
       <StyledLabel htmlFor={label}>{label}</StyledLabel>
-      {isTextarea ? (
-        <StyledTextarea
-          as="textarea"
-          id={label}
-          placeholder={`Enter your ${label}...`}
-          {...register(label, options)}
-        ></StyledTextarea>
-      ) : (
-        <StyledInput
-          type={type}
-          id={label}
-          placeholder={`Enter your ${label}...`}
-          {...register(label, options)}
-        ></StyledInput>
-      )}
-    </div>
+      <StyledInput
+        as={isTextarea ? 'textarea' : 'input'}
+        type={type}
+        id={label}
+        placeholder={`Enter your ${label}...`}
+        {...register(label, options)}
+      ></StyledInput>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+    </Wrapper>
   );
 };
 

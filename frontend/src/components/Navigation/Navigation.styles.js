@@ -28,6 +28,7 @@ export const StyledNav = styled.nav`
   border-radius: 12px;
   border: 1px solid ${({ theme }) => theme.color.lightGrey};
   background-color: ${({ theme }) => theme.color.white};
+  z-index: 100;
   svg {
     width: 17px;
     height: 17px;

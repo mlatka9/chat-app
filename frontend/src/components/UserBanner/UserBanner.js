@@ -8,7 +8,7 @@ import {
   ProfilePhoto,
   Wrapper,
 } from './UserBanner.styles';
-import imagePlaceholder from 'assets/image-placeholder.png';
+import imagePlaceholder from 'assets/image-placeholder.jpeg';
 
 const UserBanner = () => {
   const { currentUser } = useAuth();
@@ -24,11 +24,11 @@ const UserBanner = () => {
         src={currentUser.photoURL || imagePlaceholder}
         alt={currentUser.email}
       />
-      <ProfileName>{currentUser.email}</ProfileName>
+      <ProfileName>{currentUser.displayName || currentUser.email}</ProfileName>
       <NavigationToggle onClick={handleToggleNavigation} isNavOpen={isNavOpen}>
         <FontAwesomeIcon icon="caret-down" />
       </NavigationToggle>
-      {isNavOpen ? <Navigation /> : null}
+      {isNavOpen ? <Navigation setIsNavOpen={setIsNavOpen} /> : null}
     </Wrapper>
   );
 };

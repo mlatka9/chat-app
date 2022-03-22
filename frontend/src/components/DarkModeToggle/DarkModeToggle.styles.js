@@ -11,10 +11,10 @@ export const Wrapper = styled.div`
   label {
     cursor: pointer;
     user-select: none;
-    width: 70px;
-    height: 40px;
+    width: 60px;
+    height: 30px;
     display: block;
-    border-radius: 50px;
+    border-radius: 30px;
     transition: background-color 200ms ease-in-out;
     background-color: ${({ theme, isLight }) =>
       isLight ? theme.color.veryDarkGrey : theme.color.veryDarkGrey};
@@ -32,8 +32,8 @@ export const Wrapper = styled.div`
     background-color: ${({ theme, isLight }) =>
       isLight ? theme.color.yellow : theme.color.white};
     display: block;
-    width: 30px;
-    height: 30px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     transition: transform 200ms ease-in-out, background-color 200ms ease-in-out;
     transform: ${({ isLight }) =>

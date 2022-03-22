@@ -7,11 +7,22 @@ export const Wrapper = styled.div`
   max-width: 850px;
 `;
 
+export const ProfileWrapper = styled.div`
+  margin: 0 30px 50px;
+  @media (max-width: 650px) {
+    margin: 0 15px;
+  }
+`;
+
 export const FirstRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 28px 50px;
+  @media (max-width: 650px) {
+    justify-content: space-between;
+    padding: 20px 30px;
+  }
 `;
 
 export const DetailsTable = styled.div`
@@ -36,6 +47,9 @@ export const StyledLink = styled(Link)`
   border-radius: 12px;
   padding: 8px 35px;
   text-decoration: none;
+  @media (max-width: 650px) {
+    padding: 6px 30px;
+  }
 `;
 
 export const MainTitle = styled.h1`

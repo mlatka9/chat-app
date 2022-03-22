@@ -4,28 +4,29 @@ import Button from 'components/Button/Button';
 import Header from 'components/Header/Header';
 import useAuth from 'hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ChangePhoto,
   EditWrapper,
   StyledBackLink,
   Wrapper,
+  FileInputWrapper,
+  ProfileEditWrapper,
 } from './ProfileEdit.styles';
 import { useForm } from 'react-hook-form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import imagePlaceholder from 'assets/image-placeholder.jpeg';
 
 const ProfileEdit = () => {
   const { currentUser, updateUserProfile, userDetails } = useAuth();
-
+  const [isUpdating, setIsUpdating] = useState(false);
   const navigate = useNavigate();
-
-  // const [errorMessage, setErrorMessage] = useState();
-
-  console.log(userDetails);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm({
     defaultValues: {
       name: currentUser?.displayName,
@@ -36,6 +37,9 @@ const ProfileEdit = () => {
     },
   });
 
+  const watchPhoto = watch('photo', {});
+  console.log(watchPhoto);
+
   useEffect(() => {
     if (!currentUser) {
       navigate('/login');
@@ -43,7 +47,9 @@ const ProfileEdit = () => {
   }, [currentUser, navigate]);
 
   const onSubmit = async (data) => {
+    console.log(data);
     try {
+      setIsUpdating(true);
       await updateUserProfile(data);
     } catch (err) {
       console.log(err);
@@ -54,57 +60,86 @@ const ProfileEdit = () => {
   if (!currentUser) {
     return null;
   }
+
+  const isUserCreatedByEmail =
+    currentUser?.providerData[0].providerId === 'password';
   return (
-    <>
+    <Wrapper>
       <Header />
 
-      <Wrapper>
-        <StyledBackLink to="/profile">Back</StyledBackLink>
+      <ProfileEditWrapper>
+        <StyledBackLink to="/profile">
+          <FontAwesomeIcon icon="fa-angle-left" />
+          <span>Back</span>
+        </StyledBackLink>
         <EditWrapper onSubmit={handleSubmit(onSubmit)}>
           <InfoHeader>
             <h1>Change info</h1>
             <p>Changes will be reflected to every services</p>
           </InfoHeader>
           <ChangePhoto>
-            <img src={currentUser.photoURL} alt={currentUser.email} />
-            <button>change photo</button>
+            <img
+              src={currentUser.photoURL || imagePlaceholder}
+              alt={currentUser.email}
+            />
+            <FileInputWrapper>
+              <input
+                {...register('photo')}
+                type="file"
+                id="avatar"
+                accept="image/*"
+              ></input>
+              <label htmlFor="avatar">change photo</label>
+            </FileInputWrapper>
+
+            {watchPhoto.length > 0 ? <span>{watchPhoto[0].name}</span> : null}
           </ChangePhoto>
-          <EditField
-            label="name"
-            register={register}
-            options={{
-              minLength: {
-                value: 5,
-                message: 'password must have at least 5 characters',
-              },
-            }}
-          />
+          <EditField label="name" register={register} />
           <EditField label="bio" register={register} isTextarea />
           <EditField
             label="phone"
             register={register}
+            error={errors.phone?.message}
             options={{
-              // pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              minLength: 6,
-              message: 'invalid phone number',
-            }}
-          />
-          <EditField
-            label="email"
-            register={register}
-            options={{
-              required: 'Email is required',
               pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'invalid email address',
+                value:
+                  /(?<!\w)(\(?(\+|00)?48\)?)?[ -]?\d{3}[ -]?\d{3}[ -]?\d{3}(?!\w)/,
+                message: 'invalid phone number',
               },
             }}
           />
-          <EditField label="password" register={register} type="password" />
-          <Button>Save</Button>
+          {isUserCreatedByEmail ? (
+            <>
+              <EditField
+                label="email"
+                register={register}
+                error={errors.email?.message}
+                options={{
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'invalid email address',
+                  },
+                }}
+              />
+              <EditField
+                label="password"
+                register={register}
+                type="password"
+                error={errors.password?.message}
+                options={{
+                  minLength: {
+                    value: 6,
+                    message: 'password must have at least 6 characters',
+                  },
+                }}
+              ></EditField>
+            </>
+          ) : null}
+          <Button>Save</Button> {isUpdating && <span>updating...</span>}
         </EditWrapper>
-      </Wrapper>
-    </>
+      </ProfileEditWrapper>
+    </Wrapper>
   );
 };
 
