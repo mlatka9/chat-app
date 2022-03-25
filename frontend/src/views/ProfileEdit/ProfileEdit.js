@@ -17,11 +17,15 @@ import {
 import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import imagePlaceholder from 'assets/image-placeholder.jpeg';
+import ReauthenticatePopUp from 'components/ReauthenticatePopUp/ReauthenticatePopUp';
 
 const ProfileEdit = () => {
-  const { currentUser, updateUserProfile, userDetails } = useAuth();
+  const { currentUser, updateUserProfile, userDetails, reAuthUser } = useAuth();
   const [isUpdating, setIsUpdating] = useState(false);
+  // const [isChangingInputBlocked, setIsChangingInputBlocked] = useState(false);
   const navigate = useNavigate();
+
+  const [reauthPopupOpen, setReauthpopupOpen] = useState(false);
 
   const {
     register,
@@ -47,11 +51,22 @@ const ProfileEdit = () => {
   }, [currentUser, navigate]);
 
   const onSubmit = async (data) => {
+    setIsUpdating(true);
+
     try {
-      setIsUpdating(true);
+      // setIsChangingInputBlocked(true);
+
+      // if (data.email !== currentUser.email || data.password) {
+      // if (!reauthPopupValue) {
+
+      // }
+      // }
+
       await updateUserProfile(data);
     } catch (err) {
       console.log(err);
+      setReauthpopupOpen(true);
+      return;
     }
     navigate(-1);
   };
@@ -65,7 +80,6 @@ const ProfileEdit = () => {
   return (
     <Wrapper>
       <Header />
-
       <ProfileEditWrapper>
         <StyledBackLink to="/profile">
           <FontAwesomeIcon icon="fa-angle-left" />
@@ -87,14 +101,21 @@ const ProfileEdit = () => {
                 type="file"
                 id="avatar"
                 accept="image/*"
+                {...(isUpdating ? { onChange: () => {} } : {})}
+                disabled={isUpdating}
               ></input>
               <label htmlFor="avatar">change photo</label>
             </FileInputWrapper>
 
             {watchPhoto.length > 0 ? <span>{watchPhoto[0].name}</span> : null}
           </ChangePhoto>
-          <EditField label="name" register={register} />
-          <EditField label="bio" register={register} isTextarea />
+          <EditField label="name" register={register} isUpdating={isUpdating} />
+          <EditField
+            label="bio"
+            register={register}
+            isTextarea
+            isUpdating={isUpdating}
+          />
           <EditField
             label="phone"
             register={register}
@@ -106,6 +127,7 @@ const ProfileEdit = () => {
                 message: 'invalid phone number',
               },
             }}
+            isUpdating={isUpdating}
           />
           {isUserCreatedByEmail ? (
             <>
@@ -120,6 +142,7 @@ const ProfileEdit = () => {
                     message: 'invalid email address',
                   },
                 }}
+                isUpdating={isUpdating}
               />
               <EditField
                 label="password"
@@ -132,13 +155,17 @@ const ProfileEdit = () => {
                     message: 'password must have at least 6 characters',
                   },
                 }}
+                isUpdating={isUpdating}
               ></EditField>
             </>
           ) : null}
-          <Button>Save</Button>{' '}
+          <Button>Save</Button>
           {isUpdating && <StyledSpan>updating...</StyledSpan>}
         </EditWrapper>
       </ProfileEditWrapper>
+      {reauthPopupOpen && (
+        <ReauthenticatePopUp handleSubmit={handleSubmit(onSubmit)} />
+      )}
     </Wrapper>
   );
 };

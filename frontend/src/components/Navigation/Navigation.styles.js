@@ -1,5 +1,19 @@
 import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const slideIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(100%) scale(0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(100%) scale(1);
+  }
+`;
 
 export const NavItem = styled(NavLink)`
   min-width: 190px;
@@ -16,6 +30,7 @@ export const NavItem = styled(NavLink)`
     background-color: ${({ theme }) => theme.color.veryLightGrey};
   }
 `;
+
 export const StyledNav = styled.nav`
   display: flex;
   flex-direction: column;
@@ -29,6 +44,8 @@ export const StyledNav = styled.nav`
   border: 1px solid ${({ theme }) => theme.color.lightGrey};
   background-color: ${({ theme }) => theme.color.white};
   z-index: 100;
+  transform-origin: top right;
+  animation: ${slideIn} 250ms ease-in-out;
   svg {
     width: 17px;
     height: 17px;

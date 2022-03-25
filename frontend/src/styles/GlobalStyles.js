@@ -4,7 +4,7 @@ const GlobalStyles = createGlobalStyle`
     *, *::after, *::before {
         margin: 0;
         box-sizing: border-box;
-        /* transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease; */
+        transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease;
     }
 
     html, body, #root {

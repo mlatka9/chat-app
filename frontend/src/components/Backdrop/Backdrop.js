@@ -9,8 +9,6 @@ export const StyledDiv = styled.div`
 
 const backdropRoot = document.getElementById('backdrop');
 
-console.log(backdropRoot);
-
 const Backdrop = ({ onClick }) => {
   return createPortal(<StyledDiv onClick={onClick} />, backdropRoot);
 };

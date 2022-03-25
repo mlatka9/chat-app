@@ -18,6 +18,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { auth } from '../firebase';
 import axios from 'axios';
 import { CustomFirebaseError } from 'errors/CustomFirebaseError';
+import ReauthenticatePopUp from 'components/ReauthenticatePopUp/ReauthenticatePopUp';
 
 const provider = new GoogleAuthProvider();
 const AuthContext = createContext();
@@ -25,10 +26,12 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [userDetails, setUserDetails] = useState(null);
+  const [isInitialUser, setIsInitialUser] = useState(false);
 
   useEffect(() => {
     const subscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
+      setIsInitialUser(true);
       if (user) {
         getUserDetails(user.uid).then((details) => {
           setUserDetails(details);
@@ -105,6 +108,11 @@ export const AuthProvider = ({ children }) => {
     // const user = result.user;
   };
 
+  const reAuthUser = async (password) => {
+    let credential = EmailAuthProvider.credential(currentUser.email, password);
+    await reauthenticateWithCredential(currentUser, credential);
+  };
+
   const updateUserProfile = async (dataToUpdate) => {
     const {
       name: displayName,
@@ -114,6 +122,22 @@ export const AuthProvider = ({ children }) => {
       password,
       photo,
     } = dataToUpdate;
+
+    if (email !== currentUser.email) {
+      try {
+        await updateEmail(auth.currentUser, email);
+      } catch (err) {
+        throw new CustomFirebaseError('User need to re auth himself');
+      }
+    }
+
+    if (password) {
+      try {
+        await updatePassword(auth.currentUser, password);
+      } catch (err) {
+        throw new CustomFirebaseError('User need to re auth himself');
+      }
+    }
 
     if (photo[0]) {
       const fileRef = ref(getStorage(), currentUser.uid);
@@ -141,23 +165,6 @@ export const AuthProvider = ({ children }) => {
       const details = await getUserDetails(currentUser.uid);
       setUserDetails(details);
     }
-
-    if (email !== currentUser.email || password) {
-      const providedPassword = prompt('password: ');
-      let credential = EmailAuthProvider.credential(
-        currentUser.email,
-        providedPassword
-      );
-      await reauthenticateWithCredential(currentUser, credential);
-    }
-
-    if (email !== currentUser.email) {
-      await updateEmail(auth.currentUser, email);
-    }
-
-    if (password) {
-      await updatePassword(auth.currentUser, password);
-    }
   };
 
   const getUserDetails = async (userId) => {
@@ -177,12 +184,14 @@ export const AuthProvider = ({ children }) => {
   const value = {
     currentUser,
     userDetails,
+    isInitialUser,
     signup,
     signUpWithGoogle,
     readFromBackend,
     logoutUser,
     loginUser,
     updateUserProfile,
+    reAuthUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

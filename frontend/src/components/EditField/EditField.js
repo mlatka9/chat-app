@@ -42,6 +42,7 @@ const EditField = ({
   register,
   options,
   error,
+  isUpdating,
 }) => {
   return (
     <Wrapper>
@@ -52,6 +53,7 @@ const EditField = ({
         id={label}
         placeholder={`Enter your ${label}...`}
         {...register(label, options)}
+        disabled={isUpdating}
       ></StyledInput>
       {error && <ErrorMessage>{error}</ErrorMessage>}
     </Wrapper>
