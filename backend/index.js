@@ -1,15 +1,13 @@
-const express = require('express')
-const app = express()
-const port = 5000
-const {auth} = require('./firebase')
+const http = require('http');
+const app = require('./app');
 
-const cors = require('cors');
+const server = http.createServer(app);
 
-app.use(cors());
+const PORT = process.env.PORT || 5000;
 
-app.get('/', (req, res) => {
-  res.json('Hello World!')
-})
+server.listen(PORT, () => {
+	console.log(`Server running on port ${PORT}`);
+});
 
 // app.get('/api/random', async (req, res) => {
 //     const authorizationHeader = req.headers.authorization;
@@ -28,7 +26,3 @@ app.get('/', (req, res) => {
 //     }
 //     return res.json({data: "fail"})
 // })
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})

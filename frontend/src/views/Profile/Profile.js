@@ -18,6 +18,7 @@ import {
 
 const Profile = () => {
   const { currentUser, userDetails } = useAuth();
+  console.log(userDetails);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,7 +50,7 @@ const Profile = () => {
             value={currentUser.photoURL || imagePlaceholder}
             hasImage
           />
-          <ProfileField name="name" value={currentUser.displayName} />
+          <ProfileField name="name" value={userDetails?.name} />
           <ProfileField name="bio" value={userDetails?.bio} />
           <ProfileField name="phone" value={userDetails?.phoneNumber} />
           <ProfileField name="email" value={currentUser.email} />

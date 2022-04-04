@@ -5,8 +5,13 @@
   "main": "index.js",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
     "express": "^4.17.3",
-    "firebase-admin": "^10.0.2"
+    "express-async-errors": "^3.1.1",
+    "firebase-admin": "^10.0.2",
+    "http-status-codes": "^2.2.0",
+    "mongoose": "^6.2.9",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {},
   "scripts": {

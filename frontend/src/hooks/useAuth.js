@@ -33,9 +33,20 @@ export const AuthProvider = ({ children }) => {
       setCurrentUser(user);
       setIsInitialUser(true);
       if (user) {
-        getUserDetails(user.uid).then((details) => {
-          setUserDetails(details);
-        });
+        axios
+          .get(
+            `${process.env.REACT_APP_SERVER_BASE_URL}/api/v1/persons/${user.uid}`
+          )
+          .then(({ data }) => {
+            setUserDetails(data);
+          })
+          .catch((err) => {
+            console.log('cant find user ', err);
+          });
+
+        // getUserDetails(user.uid).then((details) => {
+        //   setUserDetails(details);
+        // });
       }
     });
 
@@ -50,10 +61,27 @@ export const AuthProvider = ({ children }) => {
         password
       );
 
-      await setDoc(doc(db, 'users', response.user.uid), {
-        bio: '',
-        phoneNumber: '',
-      });
+      const data = {
+        id: response.user.uid,
+        name: response.user.email,
+      };
+
+      console.log('response', response);
+
+      const headers = {
+        Authorization: `Bearer ${response.user.accessToken}`,
+      };
+
+      await axios.post(
+        `${process.env.REACT_APP_SERVER_BASE_URL}/api/v1/persons`,
+        data,
+        { headers }
+      );
+
+      // await setDoc(doc(db, 'users', response.user.uid), {
+      //   bio: '',
+      //   phoneNumber: '',
+      // });
 
       // await updateProfile(response.user, {
       //   photoURL: `https://picsum.photos/id/${
@@ -66,6 +94,7 @@ export const AuthProvider = ({ children }) => {
           'an account with the given email already exists'
         );
       }
+      console.log('axios err', err);
     }
   };
 
@@ -92,9 +121,9 @@ export const AuthProvider = ({ children }) => {
 
   const signUpWithGoogle = async () => {
     const response = await signInWithPopup(auth, provider);
+
     const docRef = doc(db, 'users', response.user.uid);
     const docSnap = await getDoc(docRef);
-
     if (!docSnap.exists()) {
       await setDoc(doc(db, 'users', response.user.uid), {
         bio: '',
