@@ -5,20 +5,18 @@ import {
   signInWithEmailAndPassword,
   updateEmail,
   updatePassword,
-  updateProfile,
   reauthenticateWithCredential,
   EmailAuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
 } from 'firebase/auth';
 import { db } from '../firebase';
-import { doc, setDoc, updateDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { auth } from '../firebase';
 import axios from 'axios';
 import { CustomFirebaseError } from 'errors/CustomFirebaseError';
-import ReauthenticatePopUp from 'components/ReauthenticatePopUp/ReauthenticatePopUp';
 
 const provider = new GoogleAuthProvider();
 const AuthContext = createContext();
@@ -43,10 +41,9 @@ export const AuthProvider = ({ children }) => {
           .catch((err) => {
             console.log('cant find user ', err);
           });
-
-        // getUserDetails(user.uid).then((details) => {
-        //   setUserDetails(details);
-        // });
+      } else {
+        setCurrentUser(null);
+        setUserDetails(null);
       }
     });
 
@@ -66,28 +63,16 @@ export const AuthProvider = ({ children }) => {
         name: response.user.email,
       };
 
-      console.log('response', response);
-
       const headers = {
         Authorization: `Bearer ${response.user.accessToken}`,
       };
 
-      await axios.post(
+      const createdUser = await axios.post(
         `${process.env.REACT_APP_SERVER_BASE_URL}/api/v1/persons`,
         data,
         { headers }
       );
-
-      // await setDoc(doc(db, 'users', response.user.uid), {
-      //   bio: '',
-      //   phoneNumber: '',
-      // });
-
-      // await updateProfile(response.user, {
-      //   photoURL: `https://picsum.photos/id/${
-      //     Math.floor(Math.random() * 99) + 1
-      //   }/200/200`,
-      // });
+      setUserDetails(createdUser.data);
     } catch (err) {
       if (err.code === 'auth/email-already-in-use') {
         throw new CustomFirebaseError(
@@ -98,20 +83,13 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // const update = async () => {
-  //   const random = Math.floor(Math.random() * 20 + 1);
-  //   await updateProfile(auth.currentUser, {
-  //     photoURL: `https://i.pravatar.cc/300?img=${random}`,
-  //   });
-  // };
-
   const logoutUser = async () => {
     await signOut(auth);
   };
 
   const loginUser = async (email, password) => {
     try {
-      const response = await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
       if ((err.code = 'auth/user-not-found')) {
         throw new CustomFirebaseError('Invalid email or password');
@@ -130,11 +108,6 @@ export const AuthProvider = ({ children }) => {
         phoneNumber: '',
       });
     }
-
-    // Do backend'u
-    // const credential = GoogleAuthProvider.credentialFromResult(result);
-    // const token = credential.accessToken;
-    // const user = result.user;
   };
 
   const reAuthUser = async (password) => {
@@ -144,13 +117,15 @@ export const AuthProvider = ({ children }) => {
 
   const updateUserProfile = async (dataToUpdate) => {
     const {
-      name: displayName,
+      name,
       phone: phoneNumber,
       bio,
       email,
       password,
       photo,
     } = dataToUpdate;
+
+    const fieldsToUpdate = {};
 
     if (email !== currentUser.email) {
       try {
@@ -172,42 +147,36 @@ export const AuthProvider = ({ children }) => {
       const fileRef = ref(getStorage(), currentUser.uid);
       await uploadBytes(fileRef, photo[0]);
       const photoURL = await getDownloadURL(fileRef);
-      await updateProfile(auth.currentUser, {
-        photoURL,
-      });
+
+      if (photoURL) {
+        fieldsToUpdate.photoURL = photoURL;
+      }
     }
 
-    if (displayName !== currentUser.displayName) {
-      await updateProfile(auth.currentUser, {
-        displayName,
-      });
+    if (phoneNumber !== userDetails.phoneNumber) {
+      fieldsToUpdate.phoneNumber = phoneNumber;
+    }
+    if (name !== userDetails.name) {
+      fieldsToUpdate.name = name;
+    }
+    if (bio !== userDetails.bio) {
+      fieldsToUpdate.bio = bio;
     }
 
-    const fieldToUpdate = {
-      ...(phoneNumber !== userDetails.phoneNumber ? { phoneNumber } : {}),
-      ...(bio !== userDetails.bio ? { bio } : {}),
-    };
+    if (Object.keys(fieldsToUpdate).length === 0) return;
 
-    if (Object.keys(fieldToUpdate).length > 0) {
-      const userRef = doc(db, 'users', currentUser.uid);
-      await updateDoc(userRef, fieldToUpdate);
-      const details = await getUserDetails(currentUser.uid);
-      setUserDetails(details);
-    }
-  };
-
-  const getUserDetails = async (userId) => {
-    const docRef = doc(db, 'users', userId);
-    return (await getDoc(docRef)).data();
-  };
-
-  const readFromBackend = async () => {
-    const idToken = await auth.currentUser.getIdToken(true);
-    const data = await axios.get('http://localhost:5000/api/random', {
+    const headers = {
       headers: {
-        authorization: `Bearer ${idToken}`,
+        authorization: `Bearer ${currentUser.accessToken}`,
       },
-    });
+    };
+    const updatedPerson = await axios.patch(
+      `${process.env.REACT_APP_SERVER_BASE_URL}/api/v1/persons/${currentUser.uid}`,
+      fieldsToUpdate,
+      headers
+    );
+
+    setUserDetails(updatedPerson.data);
   };
 
   const value = {
@@ -216,7 +185,6 @@ export const AuthProvider = ({ children }) => {
     isInitialUser,
     signup,
     signUpWithGoogle,
-    readFromBackend,
     logoutUser,
     loginUser,
     updateUserProfile,

@@ -18,11 +18,11 @@ import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import imagePlaceholder from 'assets/image-placeholder.jpeg';
 import ReauthenticatePopUp from 'components/ReauthenticatePopUp/ReauthenticatePopUp';
+import { CustomFirebaseError } from 'errors/CustomFirebaseError';
 
 const ProfileEdit = () => {
-  const { currentUser, updateUserProfile, userDetails, reAuthUser } = useAuth();
+  const { currentUser, updateUserProfile, userDetails } = useAuth();
   const [isUpdating, setIsUpdating] = useState(false);
-  // const [isChangingInputBlocked, setIsChangingInputBlocked] = useState(false);
   const navigate = useNavigate();
 
   const [reauthPopupOpen, setReauthpopupOpen] = useState(false);
@@ -34,7 +34,7 @@ const ProfileEdit = () => {
     watch,
   } = useForm({
     defaultValues: {
-      name: currentUser?.displayName,
+      name: userDetails?.name,
       bio: userDetails?.bio,
       phone: userDetails?.phoneNumber,
       email: currentUser?.email,
@@ -54,19 +54,12 @@ const ProfileEdit = () => {
     setIsUpdating(true);
 
     try {
-      // setIsChangingInputBlocked(true);
-
-      // if (data.email !== currentUser.email || data.password) {
-      // if (!reauthPopupValue) {
-
-      // }
-      // }
-
       await updateUserProfile(data);
     } catch (err) {
-      console.log(err);
-      setReauthpopupOpen(true);
-      return;
+      if (err instanceof CustomFirebaseError) {
+        setReauthpopupOpen(true);
+        return;
+      }
     }
     navigate(-1);
   };
@@ -92,7 +85,7 @@ const ProfileEdit = () => {
           </InfoHeader>
           <ChangePhoto>
             <img
-              src={currentUser.photoURL || imagePlaceholder}
+              src={userDetails?.photoURL || imagePlaceholder}
               alt={currentUser.email}
             />
             <FileInputWrapper>

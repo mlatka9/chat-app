@@ -1,6 +1,7 @@
 const { NotFound, Unauthenticated, BadRequest } = require("../errors/index");
+const {StatusCodes} = require('http-status-codes');
 const Person = require("../models/Person");
-const { auth } = require('../firebase')
+
 
 const getAllPersons = async (req, res) => {
     const persons = await Person.find({});
@@ -17,22 +18,36 @@ const getPerson = async (req, res) => {
 }
 
 const addPerson = async (req, res) => {
-    const authorizationHeader = req.headers.authorization;
-    if (!authorizationHeader) {
-        throw new BadRequest('Provide authorization token')
-    }
-    const token = authorizationHeader.slice(7)
-    try {
-        const decodedToken = await auth.verifyIdToken(token);
-        console.log(decodedToken.uid)
-        const user = await auth.getUser(decodedToken.uid)
-        const name = user.email.split("@")[0]
+        const user = req.user
+        console.log("USER", user)
+        const name = user.email.split("@")[0];
         const createdPerson = await Person.create({ _id: user.uid, name });
-        res.json(createdPerson);
-    } catch (err) {
-        console.log(err)
-        throw new Unauthenticated('Authentication invalid')
-    }
+        res.status(StatusCodes.CREATED).json(createdPerson);
 }
 
-module.exports = { getPerson, addPerson, getAllPersons }
+const updatePerson = async (req, res) => {
+    const {id} = req.params;
+    const {name, photoURL, bio, phoneNumber } = req.body;
+
+    const person = await Person.findById(id);
+
+    if(person._id !== req.user.uid) {
+        throw new Unauthenticated('You can\'t modify this person')
+    }
+    if(name) {
+        person.name = name;
+    }
+    if(photoURL) {
+        person.photoURL = photoURL;
+    }
+    if(bio) {
+        person.bio = bio;
+    }
+    if(phoneNumber) {
+        person.phoneNumber = phoneNumber;
+    }
+    const updatePerson = await person.save();
+    res.json(updatePerson)
+}
+
+module.exports = { getPerson, addPerson, getAllPersons, updatePerson }

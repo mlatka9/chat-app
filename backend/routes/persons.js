@@ -1,7 +1,11 @@
-const router = require('express').Router();
-const {addPerson, getPerson, getAllPersons} = require('../controllers/persons')
+const publicRouter = require('express').Router();
+const protectedRouter = require('express').Router();
+const {addPerson, getPerson, getAllPersons, updatePerson} = require('../controllers/persons')
 
-router.route("/:id").get(getPerson);
-router.route("/").post(addPerson).get(getAllPersons)
+publicRouter.route("/").get(getAllPersons)
+publicRouter.route("/:id").get(getPerson);
 
-module.exports = router;
+protectedRouter.route("/:id").patch(updatePerson);
+protectedRouter.route("/").post(addPerson)
+
+module.exports = {publicRouter, protectedRouter};

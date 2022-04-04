@@ -64,7 +64,7 @@ const Signup = () => {
   const onSubmit = async (data) => {
     const { email, password } = data;
     try {
-      await signup(email, password);
+      await signup(email.trim(), password.trim());
     } catch (err) {
       console.log({ err });
       setErrorMessage(err.message);

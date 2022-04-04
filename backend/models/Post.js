@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {Schema} = require('mongoose');
+const { Schema } = require('mongoose');
 
 const postSchema = new Schema({
     content: {
@@ -9,8 +9,7 @@ const postSchema = new Schema({
     postedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Person',
-        required : [true, "postedBy is required"]
-
+        required: [true, "postedBy is required"]
     },
     channel: {
         type: mongoose.Schema.Types.ObjectId,
@@ -20,6 +19,24 @@ const postSchema = new Schema({
 },
 {
     timestamps: true,
-  })
+})
+
+postSchema.options.toJSON = {
+    transform: function (doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+        return ret;
+    }
+};
+
+postSchema.options.toJSON = {
+    transform: function (doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+        return ret;
+    }
+};
 
 module.exports = mongoose.model('Post', postSchema);

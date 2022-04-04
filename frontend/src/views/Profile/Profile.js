@@ -18,7 +18,6 @@ import {
 
 const Profile = () => {
   const { currentUser, userDetails } = useAuth();
-  console.log(userDetails);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,7 +46,7 @@ const Profile = () => {
           </FirstRow>
           <ProfileField
             name="photo"
-            value={currentUser.photoURL || imagePlaceholder}
+            value={userDetails?.photoURL || imagePlaceholder}
             hasImage
           />
           <ProfileField name="name" value={userDetails?.name} />

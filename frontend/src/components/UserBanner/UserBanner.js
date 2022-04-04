@@ -11,7 +11,7 @@ import {
 import imagePlaceholder from 'assets/image-placeholder.jpeg';
 
 const UserBanner = () => {
-  const { currentUser } = useAuth();
+  const { userDetails, currentUser } = useAuth();
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   const handleToggleNavigation = () => {
@@ -21,10 +21,10 @@ const UserBanner = () => {
   return (
     <Wrapper>
       <ProfilePhoto
-        src={currentUser.photoURL || imagePlaceholder}
+        src={userDetails?.photoURL || imagePlaceholder}
         alt={currentUser.email}
       />
-      <ProfileName>{currentUser.displayName || currentUser.email}</ProfileName>
+      <ProfileName>{userDetails?.name || currentUser.email}</ProfileName>
       <NavigationToggle onClick={handleToggleNavigation} isNavOpen={isNavOpen}>
         <FontAwesomeIcon icon="caret-down" />
       </NavigationToggle>
