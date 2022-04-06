@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InputWrapper, Wrapper } from './FormField.styles';
-import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
+import ErrorMessage from 'components/Profile/ErrorMessage/ErrorMessage';
 
 const FormField = ({
   label,

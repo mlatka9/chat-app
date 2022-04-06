@@ -1,16 +1,20 @@
 export const lightTheme = {
   color: {
-    background: 'white',
-    veryDarkGrey: '#333333',
-    darkGrey: '#4F4F4F',
-    grey: '#828282',
-    lightGrey: '#BDBDBD',
-    veryLightGrey: '#F2F2F2',
-    blue: '#2F80ED',
-    white: 'white',
-    red: '#d42c20',
-    yellow: 'yellow',
-    black: '#000',
+    grey100: '#000',
+
+    grey200: '#0f0f13',
+    grey300: '#27272e',
+    grey400: '#494d4f',
+    grey500: '#828282',
+
+    grey600: '#e6e7eb',
+    grey700: '#fafafc',
+    grey800: '#fafafc',
+    grey900: '#FFF',
+
+    blue500: '#2F80ED',
+    red500: '#d42c20',
+    yellow500: 'yellow',
   },
   fontWeight: {
     normal: 400,
@@ -31,16 +35,19 @@ export const darkTheme = {
   ...lightTheme,
   color: {
     ...lightTheme.color,
-    background: 'rgb(40,44,52)',
-    veryDarkGrey: '#E0E0E0',
-    grey: '#DDD',
-    lightGrey: '#CCC',
-    blue: '#2F80ED',
-    white: 'rgb(33,37,43)',
-    red: '#ff6e63',
-    yellow: 'yellow',
-    black: '#FFF',
-    veryLightGrey: '#334',
-    darkGrey: '#EEE',
+
+    grey100: '#FFF',
+
+    grey200: '#E0E0E0',
+    grey300: '#DDD',
+    grey400: '#CCC',
+    grey500: '#757b8a',
+    grey600: '#4d5261',
+    grey700: '#21252b',
+    grey800: '#1e2026',
+    grey900: '#120F13',
+
+    blue500: '#2F80ED',
+    red500: '#ff6e63',
   },
 };

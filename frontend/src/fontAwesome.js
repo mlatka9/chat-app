@@ -5,6 +5,7 @@ import {
   faGoogle,
   faGithub,
 } from '@fortawesome/free-brands-svg-icons';
+
 import {
   faLock,
   faEnvelope,
@@ -13,6 +14,9 @@ import {
   faArrowRightFromBracket,
   faCaretDown,
   faAngleLeft,
+  faPlus,
+  faChevronLeft,
+  faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -25,5 +29,8 @@ library.add(
   faCircleUser,
   faArrowRightFromBracket,
   faCaretDown,
-  faAngleLeft
+  faAngleLeft,
+  faPlus,
+  faChevronLeft,
+  faPaperPlane
 );

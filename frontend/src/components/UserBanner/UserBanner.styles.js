@@ -5,19 +5,20 @@ export const Wrapper = styled.div`
   align-items: center;
   gap: 10px;
   position: relative;
+  justify-content: ${({ isBigger }) => (isBigger ? 'space-between' : 'unset')};
 `;
 
 export const ProfilePhoto = styled.img`
   display: block;
-  width: 32px;
-  height: 32px;
   border-radius: 5px;
+  width: ${({ isBigger }) => (isBigger ? '42px' : '32px')};
+  height: ${({ isBigger }) => (isBigger ? '42px' : '32px')};
 `;
 
 export const ProfileName = styled.span`
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   font-size: ${({ theme }) => theme.fontSize.s};
-  color: ${({ theme }) => theme.color.veryDarkGrey};
+  color: ${({ theme }) => theme.color.grey200};
   letter-spacing: -0.035em;
 `;
 
@@ -33,6 +34,6 @@ export const NavigationToggle = styled.button`
   svg {
     width: 18px;
     height: 18px;
-    color: ${({ theme }) => theme.color.veryDarkGrey};
+    color: ${({ theme }) => theme.color.grey200};
   }
 `;

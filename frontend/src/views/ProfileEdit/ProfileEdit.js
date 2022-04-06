@@ -1,5 +1,5 @@
-import EditField from 'components/EditField/EditField';
-import InfoHeader from 'components/InfoHeader/InfoHeader';
+import EditField from 'components/Profile/EditField/EditField';
+import InfoHeader from 'components/Profile/InfoHeader/InfoHeader';
 import Button from 'components/Button/Button';
 import Header from 'components/Header/Header';
 import useAuth from 'hooks/useAuth';
@@ -17,7 +17,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import imagePlaceholder from 'assets/image-placeholder.jpeg';
-import ReauthenticatePopUp from 'components/ReauthenticatePopUp/ReauthenticatePopUp';
+import ReauthenticatePopUp from 'components/Profile/ReauthenticatePopUp/ReauthenticatePopUp';
 import { CustomFirebaseError } from 'errors/CustomFirebaseError';
 
 const ProfileEdit = () => {

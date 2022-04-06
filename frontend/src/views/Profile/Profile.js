@@ -2,10 +2,10 @@ import useAuth from 'hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import Header from 'components/Header/Header';
 import { useEffect } from 'react';
-import InfoHeader from 'components/InfoHeader/InfoHeader';
+import InfoHeader from 'components/Profile/InfoHeader/InfoHeader';
 import imagePlaceholder from 'assets/image-placeholder.jpeg';
 
-import ProfileField from 'components/ProfileField/ProfileField';
+import ProfileField from 'components/Profile/ProfileField/ProfileField';
 import {
   DetailsTable,
   FirstRow,
@@ -18,6 +18,8 @@ import {
 
 const Profile = () => {
   const { currentUser, userDetails } = useAuth();
+
+  console.log(userDetails);
   const navigate = useNavigate();
 
   useEffect(() => {

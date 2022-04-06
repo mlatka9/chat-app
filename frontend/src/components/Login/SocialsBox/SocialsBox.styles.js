@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledParagraph = styled.p`
-  color: ${({ theme }) => theme.color.grey};
+  color: ${({ theme }) => theme.color.grey300};
   font-size: ${({ theme }) => theme.fontSize.s};
   text-align: center;
   margin-bottom: 22px;
@@ -21,21 +21,21 @@ export const Socials = styled.div`
     justify-content: center;
     background-color: transparent;
     &:hover svg {
-      border: 1px solid ${({ theme }) => theme.color.veryDarkGrey};
+      border: 1px solid ${({ theme }) => theme.color.grey200};
       path {
-        fill: ${({ theme }) => theme.color.veryDarkGrey};
+        fill: ${({ theme }) => theme.color.grey200};
       }
     }
   }
   svg {
     display: block;
     padding: 10px;
-    border: 1px solid ${({ theme }) => theme.color.grey};
+    border: 1px solid ${({ theme }) => theme.color.grey300};
     border-radius: 50%;
     width: 20px;
     height: 20px;
     path {
-      fill: ${({ theme }) => theme.color.grey};
+      fill: ${({ theme }) => theme.color.grey300};
     }
   }
 `;

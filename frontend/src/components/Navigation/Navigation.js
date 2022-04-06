@@ -3,11 +3,11 @@ import useAuth from 'hooks/useAuth';
 import { LogoutButton, NavItem, StyledNav } from './Navigation.styles';
 import Backdrop from 'components/Backdrop/Backdrop';
 
-const Navigation = ({ setIsNavOpen }) => {
+const Navigation = ({ setIsNavOpen, showOnTop }) => {
   const { logoutUser } = useAuth();
   return (
     <>
-      <StyledNav>
+      <StyledNav showOnTop={showOnTop}>
         <NavItem to="/profile">
           <FontAwesomeIcon icon="circle-user" />
           My profile

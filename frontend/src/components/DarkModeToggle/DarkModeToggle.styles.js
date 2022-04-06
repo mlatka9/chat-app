@@ -16,8 +16,9 @@ export const Wrapper = styled.div`
     display: block;
     border-radius: 30px;
     transition: background-color 200ms ease-in-out;
-    background-color: ${({ theme, isLight }) =>
-      isLight ? theme.color.veryDarkGrey : theme.color.veryDarkGrey};
+    /* background-color: ${({ theme, isLight }) =>
+      isLight ? theme.color.veryDarkGrey : theme.color.veryDarkGrey}; */
+    background-color: ${({ theme }) => theme.color.grey300};
     display: flex;
     align-items: center;
     padding: 5px;
@@ -30,7 +31,7 @@ export const Wrapper = styled.div`
   }
   span {
     background-color: ${({ theme, isLight }) =>
-      isLight ? theme.color.yellow : theme.color.white};
+      isLight ? theme.color.yellow500 : theme.color.grey700};
     display: block;
     width: 22px;
     height: 22px;

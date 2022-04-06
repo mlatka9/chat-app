@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import styled from 'styled-components';
-import LoginWrapper from 'components/LoginWrapper/LoginWrapper';
+import LoginWrapper from 'components/Login/LoginWrapper/LoginWrapper';
 import { useForm } from 'react-hook-form';
-import FormField from 'components/FormField/FormField';
+import FormField from 'components/Login/FormField/FormField';
 import Button from 'components/Button/Button';
-import SocialsBox from 'components/SocialsBox/SocialsBox';
+import SocialsBox from 'components/Login/SocialsBox/SocialsBox';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
+import ErrorMessage from 'components/Profile/ErrorMessage/ErrorMessage';
 
 const LoginErrorMessage = styled(ErrorMessage)`
   text-align: center;
@@ -25,11 +25,11 @@ export const StyledForm = styled.form`
 export const LoginParapgraph = styled.p`
   margin-top: 32px;
   font-size: ${({ theme }) => theme.fontSize.s};
-  color: ${({ theme }) => theme.color.grey};
+  color: ${({ theme }) => theme.color.grey300};
   text-align: center;
   a {
     text-decoration: none;
-    color: ${({ theme }) => theme.color.blue};
+    color: ${({ theme }) => theme.color.blue500};
   }
 `;
 

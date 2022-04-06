@@ -8,3 +8,5 @@ Live demo: [link](https://623a4cfe1229a10009680e98--deft-griffin-b062df.netlify.
 TODO:
  - trimowanie validacji formularzy
  - połączenie z moim backendem po logowaniu z google
+ - poprawić colors theme 
+ - poprawić walidację obrazka

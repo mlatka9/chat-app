@@ -26,7 +26,7 @@ app.use(morgan('tiny'));
 
 const channelsRoutes = require('./routes/channels');
 const personsRoutes = require('./routes/persons');
-const postsRoutes = require('./routes/posts')
+const postsRoutes = require('./routes/posts');
 
 const notFoundMiddleware = require('./middleware/not-found')
 const errorHandlerMiddleware = require('./middleware/error-handler')

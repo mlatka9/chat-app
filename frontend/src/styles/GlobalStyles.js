@@ -14,7 +14,7 @@ const GlobalStyles = createGlobalStyle`
     body {
         font-family: 'Noto Sans', sans-serif;
         font-weight: 400;
-        background-color: ${({ theme }) => theme.color.background};     
+        background-color: ${({ theme }) => theme.color.grey800};     
     }   
 
     button, input, textarea {

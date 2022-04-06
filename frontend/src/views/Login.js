@@ -1,15 +1,15 @@
-import LoginWrapper from 'components/LoginWrapper/LoginWrapper';
+import LoginWrapper from 'components/Login/LoginWrapper/LoginWrapper';
 import { StyledForm } from './Signup';
 import { useForm } from 'react-hook-form';
-import FormField from 'components/FormField/FormField';
+import FormField from 'components/Login/FormField/FormField';
 import Button from 'components/Button/Button';
-import SocialsBox from 'components/SocialsBox/SocialsBox';
+import SocialsBox from 'components/Login/SocialsBox/SocialsBox';
 import { LoginParapgraph } from './Signup';
 import { Link } from 'react-router-dom';
 import useAuth from 'hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
+import ErrorMessage from 'components/Profile/ErrorMessage/ErrorMessage';
 import styled from 'styled-components';
 
 const LoginErrorMessage = styled(ErrorMessage)`

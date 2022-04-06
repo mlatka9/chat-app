@@ -14,17 +14,17 @@ export const InputWrapper = styled.div`
     border: none;
     outline: ${({ theme, error }) =>
       error
-        ? `1px solid  ${theme.color.red}`
-        : `1px solid ${theme.color.lightGrey}`};
+        ? `1px solid  ${theme.color.red500}`
+        : `1px solid ${theme.color.grey400}`};
     height: 48px;
-    color: ${({ theme }) => theme.color.grey};
+    color: ${({ theme }) => theme.color.grey300};
     border-radius: 8px;
     padding-left: 42px;
     font-size: ${({ theme }) => theme.fontSize.m};
-    background-color: ${({ theme }) => theme.color.white};
+    background-color: ${({ theme }) => theme.color.grey700};
     &:focus {
-      outline: 2px solid ${({ theme }) => theme.color.veryDarkGrey};
-      color: ${({ theme }) => theme.color.veryDarkGrey};
+      outline: 2px solid ${({ theme }) => theme.color.grey200};
+      color: ${({ theme }) => theme.color.grey200};
     }
   }
   svg {
@@ -35,7 +35,7 @@ export const InputWrapper = styled.div`
     width: 20px;
     height: 20px;
     path {
-      fill: ${({ theme }) => theme.color.grey};
+      fill: ${({ theme }) => theme.color.grey300};
     }
   }
 `;

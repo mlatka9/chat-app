@@ -1,11 +1,5 @@
 import { createPortal } from 'react-dom';
-import styled from 'styled-components';
-
-export const StyledDiv = styled.div`
-  position: fixed;
-  inset: 0;
-  z-index: 40;
-`;
+import { StyledDiv } from './Backdrop.styes';
 
 const backdropRoot = document.getElementById('backdrop');
 

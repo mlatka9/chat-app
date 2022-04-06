@@ -26,7 +26,7 @@ export const FirstRow = styled.div`
 `;
 
 export const DetailsTable = styled.div`
-  background-color: ${({ theme }) => theme.color.white};
+  background-color: ${({ theme }) => theme.color.grey700};
   border-radius: 12px;
   > div:first-of-type {
     border-radius: 12px 12px 0 0;
@@ -36,14 +36,17 @@ export const DetailsTable = styled.div`
   }
 
   > div {
-    border: 1px solid ${({ theme }) => theme.color.veryLightGrey};
+    border: 1px solid ${({ theme }) => theme.color.grey500};
+  }
+  > div:not(:last-child) {
+    border-bottom: none;
   }
 `;
 
 export const StyledLink = styled(Link)`
   font-size: ${({ theme }) => theme.fontSize.m};
-  color: ${({ theme }) => theme.color.grey};
-  border: 1px solid ${({ theme }) => theme.color.grey};
+  color: ${({ theme }) => theme.color.grey300};
+  border: 1px solid ${({ theme }) => theme.color.grey300};
   border-radius: 12px;
   padding: 8px 35px;
   text-decoration: none;
@@ -57,7 +60,7 @@ export const MainTitle = styled.h1`
   font-weight: ${({ theme }) => theme.fontWeight.normal};
   text-align: center;
   margin-bottom: 8px;
-  color: ${({ theme }) => theme.color.black};
+  color: ${({ theme }) => theme.color.grey200};
 `;
 
 export const SubTitle = styled.h1`
@@ -65,5 +68,5 @@ export const SubTitle = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.l};
   font-weight: ${({ theme }) => theme.fontWeight.normal};
   margin-bottom: 45px;
-  color: ${({ theme }) => theme.color.black};
+  color: ${({ theme }) => theme.color.grey200};
 `;

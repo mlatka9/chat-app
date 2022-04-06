@@ -1,7 +1,21 @@
 import { NavLink } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 
-const slideIn = keyframes`
+const showTop = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+`;
+
+const showBottom = keyframes`
   0% {
     opacity: 0;
     transform: translateY(100%) scale(0);
@@ -25,9 +39,9 @@ export const NavItem = styled(NavLink)`
   text-decoration: none;
   display: flex;
   align-items: center;
-  color: ${({ theme }) => theme.color.darkGrey};
+  color: ${({ theme }) => theme.color.grey300};
   &.active {
-    background-color: ${({ theme }) => theme.color.veryLightGrey};
+    background-color: ${({ theme }) => theme.color.grey600};
   }
 `;
 
@@ -35,17 +49,20 @@ export const StyledNav = styled.nav`
   display: flex;
   flex-direction: column;
   position: absolute;
-  bottom: -30px;
+  bottom: ${({ showOnTop }) => (showOnTop ? '42px' : `-30px`)};
   right: 0;
-  transform: translateY(100%);
+  transform: ${({ showOnTop }) =>
+    showOnTop ? `translateY(0px)` : `translateY(100%)`};
   padding: 15px 12px;
   gap: 10px;
   border-radius: 12px;
-  border: 1px solid ${({ theme }) => theme.color.lightGrey};
-  background-color: ${({ theme }) => theme.color.white};
+  border: 1px solid ${({ theme }) => theme.color.grey500};
+  background-color: ${({ theme }) => theme.color.grey700};
   z-index: 100;
-  transform-origin: top right;
-  animation: ${slideIn} 250ms ease-in-out;
+  transform-origin: ${({ showOnTop }) =>
+    showOnTop ? 'bottom right' : 'top right'};
+  animation: ${({ showOnTop }) => (showOnTop ? showTop : showBottom)} 250ms
+    ease-in-out forwards;
   svg {
     width: 17px;
     height: 17px;
@@ -55,7 +72,7 @@ export const StyledNav = styled.nav`
 
 export const LogoutButton = styled(NavItem)`
   border: none;
-  color: ${({ theme }) => theme.color.red};
+  color: ${({ theme }) => theme.color.red500};
   background-color: transparent;
   cursor: pointer;
 `;
