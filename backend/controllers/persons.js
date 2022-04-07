@@ -19,7 +19,6 @@ const getPerson = async (req, res) => {
 
 const addPerson = async (req, res) => {
         const user = req.user
-        console.log("USER", user)
         const name = user.email.split("@")[0];
         const createdPerson = await Person.create({ _id: user.uid, name });
         res.status(StatusCodes.CREATED).json(createdPerson);

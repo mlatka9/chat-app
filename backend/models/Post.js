@@ -7,7 +7,7 @@ const postSchema = new Schema({
         required: [true, 'content is required']
     },
     postedBy: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'Person',
         required: [true, "postedBy is required"]
     },

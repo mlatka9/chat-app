@@ -1,11 +1,12 @@
-const publicRouter = require('express').Router();
-const protectedRouter = require('express').Router();
+const router = require('express').Router();
+
+// const protectedRouter = require('express').Router();
+
 const {addPerson, getPerson, getAllPersons, updatePerson} = require('../controllers/persons')
 
-publicRouter.route("/").get(getAllPersons)
-publicRouter.route("/:id").get(getPerson);
+router.route("/").get(getAllPersons).post(addPerson)
+router.route("/:id").get(getPerson).patch(updatePerson);
 
-protectedRouter.route("/:id").patch(updatePerson);
-protectedRouter.route("/").post(addPerson)
 
-module.exports = {publicRouter, protectedRouter};
+
+module.exports = router;

@@ -30,12 +30,15 @@ const postsRoutes = require('./routes/posts');
 
 const notFoundMiddleware = require('./middleware/not-found')
 const errorHandlerMiddleware = require('./middleware/error-handler')
-const authenticationMiddleware = require('./middleware/authentication')
+const {authenticationMiddleware} = require('./middleware/authentication')
 
-app.use('/api/v1/channels', channelsRoutes)
-app.use('/api/v1/persons', personsRoutes.publicRouter)
-app.use('/api/v1/persons', authenticationMiddleware, personsRoutes.protectedRouter)
-app.use('/api/v1/posts', postsRoutes)
+app.use('/api/v1/persons', authenticationMiddleware, personsRoutes)
+app.use('/api/v1/posts', authenticationMiddleware, postsRoutes)
+
+app.use('/api/v1/channels', authenticationMiddleware, channelsRoutes)
+
+
+
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)

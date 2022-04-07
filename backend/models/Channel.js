@@ -10,9 +10,27 @@ const channelSchema = new Schema({
         type: String,
         required: [true, "Channel description is required"]
     },
+    abbreviation: {
+        type: String,
+        require: [true, 'Abbreviation is required'] 
+    },
+    isPrivate: {
+        type: Boolean,
+        default: false,
+    },
     members: [{
-        type: Schema.Types.ObjectId, ref: 'Person'
+        type: String, ref: 'Person',
+        default: []
     }]
 })
+
+channelSchema.options.toJSON = {
+    transform: function (doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+        return ret;
+    }
+};
 
 module.exports = mongoose.model('Channel', channelSchema);
