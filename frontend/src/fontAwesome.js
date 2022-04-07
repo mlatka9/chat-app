@@ -17,6 +17,7 @@ import {
   faPlus,
   faChevronLeft,
   faPaperPlane,
+  faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -32,5 +33,6 @@ library.add(
   faAngleLeft,
   faPlus,
   faChevronLeft,
-  faPaperPlane
+  faPaperPlane,
+  faMagnifyingGlass
 );

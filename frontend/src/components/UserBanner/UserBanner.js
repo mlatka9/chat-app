@@ -11,7 +11,6 @@ import {
 import imagePlaceholder from 'assets/image-placeholder.jpeg';
 
 const UserBanner = ({ showOnTop, isBigger }) => {
-  console.log(isBigger);
   const { userDetails, currentUser } = useAuth();
   const [isNavOpen, setIsNavOpen] = useState(false);
 

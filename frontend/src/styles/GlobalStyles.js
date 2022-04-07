@@ -7,6 +7,12 @@ const GlobalStyles = createGlobalStyle`
         transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease;
     }
 
+    
+    *:focus {
+        outline: 3px dashed grey;
+    }
+    
+
     html, body, #root {
         height: 100%;  
     }

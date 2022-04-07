@@ -10,10 +10,10 @@ export const UserBannerWrapper = styled.div`
 
 export const Wrapper = styled.aside`
   width: 330px;
-  background-color: ${({ theme }) => theme.color.grey900};
+  background-color: ${({ theme }) => theme.color.grey700};
+  box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.15), 0 0 40px rgba(0, 0, 0, 0.1);
   height: 100%;
-  /* padding: 0 32px 40px; */
   display: flex;
   flex-direction: column;
-  /* position: relative; */
+  /* z-index: 100; */
 `;

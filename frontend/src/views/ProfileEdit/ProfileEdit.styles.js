@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
 
 export const ProfileEditWrapper = styled.div`
   margin: 0 30px 50px;
+
   @media (max-width: 650px) {
     margin: 0 15px;
   }
@@ -16,9 +17,12 @@ export const ProfileEditWrapper = styled.div`
 
 export const EditWrapper = styled.form`
   padding: 30px 50px;
-  border: 1px solid ${({ theme }) => theme.color.grey500};
+  /* border: 1px solid ${({ theme }) => theme.color.grey500}; */
   border-radius: 12px;
   background-color: ${({ theme }) => theme.color.grey700};
+  /* background-color: red; */
+  box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.15), 0 0 40px rgba(0, 0, 0, 0.1);
+
   > div {
     margin-bottom: 24px;
   }

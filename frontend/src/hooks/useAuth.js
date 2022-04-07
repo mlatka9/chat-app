@@ -17,6 +17,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { auth } from '../firebase';
 import axios from 'axios';
 import { CustomFirebaseError } from 'errors/CustomFirebaseError';
+import personsService from 'service/persons';
 
 const provider = new GoogleAuthProvider();
 const AuthContext = createContext();
@@ -29,14 +30,13 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const subscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      setIsInitialUser(true);
+
       if (user) {
-        axios
-          .get(
-            `${process.env.REACT_APP_SERVER_BASE_URL}/api/v1/persons/${user.uid}`
-          )
+        personsService
+          .getPersonDetails(user.uid)
           .then(({ data }) => {
             setUserDetails(data);
+            setIsInitialUser(true);
           })
           .catch((err) => {
             console.log('cant find user ', err);
@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }) => {
           'an account with the given email already exists'
         );
       }
-      console.log('axios err', err);
+      console.log(err);
     }
   };
 

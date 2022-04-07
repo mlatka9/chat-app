@@ -58,7 +58,7 @@ export const StyledNav = styled.nav`
   border-radius: 12px;
   border: 1px solid ${({ theme }) => theme.color.grey500};
   background-color: ${({ theme }) => theme.color.grey700};
-  z-index: 100;
+  z-index: 1000;
   transform-origin: ${({ showOnTop }) =>
     showOnTop ? 'bottom right' : 'top right'};
   animation: ${({ showOnTop }) => (showOnTop ? showTop : showBottom)} 250ms

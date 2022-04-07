@@ -11,6 +11,9 @@ import Profile from './views/Profile/Profile';
 import GroupChat from 'views/GroupChat';
 import ProfileEdit from 'views/ProfileEdit/ProfileEdit';
 import Loading from 'components/Loading/Loading';
+import ChatFallback from 'components/GroupChat/ChatFallback/ChatFallback';
+import ChatSection from 'components/GroupChat/ChatSection.js/ChatSection';
+import { useState } from 'react';
 
 import './fontAwesome';
 
@@ -23,17 +26,21 @@ const Content = styled.div`
 function App() {
   const { theme } = useDarkMode();
   const { isInitialUser } = useAuth();
+
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyles />
       <Content>
         {isInitialUser ? (
           <Routes>
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/chat" element={<GroupChat />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/profile-edit" element={<ProfileEdit />} />
+            <Route path="signup" element={<Signup />} />
+            <Route path="login" element={<Login />} />
+            <Route path="chat" element={<GroupChat />}>
+              <Route path=":id" element={<ChatSection />} />
+              <Route path="" element={<ChatFallback />} />
+            </Route>
+            <Route path="profile" element={<Profile />} />
+            <Route path="profile-edit" element={<ProfileEdit />} />
             <Route path="*" element={<Navigate to="/profile" />} />
           </Routes>
         ) : (

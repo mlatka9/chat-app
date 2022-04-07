@@ -6,11 +6,21 @@ import {
   StyledHeader,
   AsideContent,
 } from './SelectedChannel.styles';
+import { Routes, Route, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { getChannel } from 'app/channelSlice';
+import { Link, useNavigate } from 'react-router-dom';
 
-const SelectedChannel = ({ setSelectedChannel }) => {
+const SelectedChannel = ({ joinedChannel, setIsAllChannelsSelected }) => {
+  const params = useParams();
+  const channel = useSelector((state) => state.channel[params.id]);
+
   const handleBackToAllChannels = () => {
-    setSelectedChannel(null);
+    setIsAllChannelsSelected(true);
   };
+
+  if (joinedChannel !== params.id) return null;
 
   return (
     <>
@@ -23,23 +33,21 @@ const SelectedChannel = ({ setSelectedChannel }) => {
 
       <AsideContent>
         <ChannelInfo>
-          <h2>Front-end developers</h2>
-          <p>
-            Pellentesque sagittis elit enim, sit amet ultrices tellus accumsan
-            quis. In gravida mollis purus, at interdum arcu tempor non
-          </p>
+          <h2>{channel.name}</h2>
+          <p>{channel.description}</p>
         </ChannelInfo>
         <MembersListWrapper>
           <h2>members</h2>
           <ul>
-            <li>
-              <img src={PlaceholderPhoto} alt="Xanthe Neal" />
-              <span>Xanthe Neal</span>
-            </li>
-            <li>
-              <img src={PlaceholderPhoto} alt="Xanthe Neal" />
-              <span>Xanthe Neal</span>
-            </li>
+            {channel.members.map((member) => (
+              <li key={member.id}>
+                <img
+                  src={member.photoURL || PlaceholderPhoto}
+                  alt={member.name}
+                />
+                <span>{member.name}</span>
+              </li>
+            ))}
           </ul>
         </MembersListWrapper>
       </AsideContent>

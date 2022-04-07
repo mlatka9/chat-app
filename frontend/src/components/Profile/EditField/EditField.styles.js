@@ -11,17 +11,16 @@ export const StyledInput = styled.input`
   display: block;
   padding: 16px 20px;
   border-radius: 12px;
-  border: 1px solid ${({ theme }) => theme.color.grey300};
   color: ${({ theme }) => theme.color.grey};
-  outline: 1px solid ${({ theme }) => theme.color.grey400};
+  outline: 1px solid ${({ theme }) => theme.color.grey600};
   border: none;
   width: 100%;
   max-width: 420px;
   background-color: ${({ theme }) => theme.color.grey700};
   resize: vertical;
-
+  color: ${({ theme }) => theme.color.grey200};
   &:focus {
-    outline: 2px solid ${({ theme }) => theme.color.grey200};
+    outline: 1px solid ${({ theme }) => theme.color.grey500};
     color: ${({ theme }) => theme.color.grey200};
   }
 `;

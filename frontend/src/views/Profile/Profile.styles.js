@@ -19,6 +19,7 @@ export const FirstRow = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 28px 50px;
+
   @media (max-width: 650px) {
     justify-content: space-between;
     padding: 20px 30px;
@@ -28,6 +29,8 @@ export const FirstRow = styled.div`
 export const DetailsTable = styled.div`
   background-color: ${({ theme }) => theme.color.grey700};
   border-radius: 12px;
+  /* background-color: red; */
+  box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.15), 0 0 40px rgba(0, 0, 0, 0.1);
   > div:first-of-type {
     border-radius: 12px 12px 0 0;
   }
@@ -35,11 +38,8 @@ export const DetailsTable = styled.div`
     border-radius: 0 0 12px 12px;
   }
 
-  > div {
-    border: 1px solid ${({ theme }) => theme.color.grey500};
-  }
   > div:not(:last-child) {
-    border-bottom: none;
+    border-bottom: 1px solid ${({ theme }) => theme.color.grey600};
   }
 `;
 

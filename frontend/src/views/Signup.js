@@ -66,7 +66,7 @@ const Signup = () => {
     try {
       await signup(email.trim(), password.trim());
     } catch (err) {
-      console.log({ err });
+      console.log(err);
       setErrorMessage(err.message);
     }
   };

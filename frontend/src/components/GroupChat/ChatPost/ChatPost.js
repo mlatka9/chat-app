@@ -1,5 +1,10 @@
 import PlaceholderImage from 'assets/image-placeholder.jpeg';
 import styled from 'styled-components';
+import TimeAgo from 'javascript-time-ago';
+
+import en from 'javascript-time-ago/locale/en.json';
+TimeAgo.addDefaultLocale(en);
+const timeAgo = new TimeAgo('en-US');
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,23 +36,20 @@ const Content = styled.p`
   line-height: 25px;
 `;
 
-const ChatPost = () => {
+const ChatPost = ({ post }) => {
+  const timestamp = window.Date.parse(post.createdAt);
   return (
     <Wrapper>
-      <img src={PlaceholderImage} alt="Nellie Francis"></img>
+      <img
+        src={post.postedBy.photoURL || PlaceholderImage}
+        alt="Nellie Francis"
+      ></img>
       <div>
         <div>
-          <Name>Nellie Francis</Name>
-          <Date>yesterday at 2:29 AM</Date>
+          <Name>{post.postedBy.name}</Name>
+          <Date>{timeAgo.format(timestamp)}</Date>
         </div>
-
-        <Content>
-          Morbi eget turpis ut massa luctus cursus. Sed sit amet risus quis
-          neque condimentum aliquet. Phasellus consequat et justo eu accumsan
-          🙌. Proin pretium id nunc eu molestie. Nam consectetur, ligula vel
-          mattis facilisis, ex mauris venenatis nulla, eget tempor enim neque
-          eget massa 🤣
-        </Content>
+        <Content>{post.content}</Content>
       </div>
     </Wrapper>
   );

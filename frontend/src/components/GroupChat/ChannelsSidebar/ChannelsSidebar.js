@@ -5,16 +5,33 @@ import UserBanner from 'components/UserBanner/UserBanner';
 import DarkModeToggle from 'components/DarkModeToggle/DarkModeToggle';
 import { useState } from 'react';
 import { UserBannerWrapper, Wrapper } from './ChannelsSidebar.styles';
+import { Routes, Route, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { getChannel } from 'app/channelSlice';
 
-const ChannelsSidebar = () => {
-  const [selectedChannel, setSelectedChannel] = useState(null);
+const ChannelsSidebar = ({ joinedChannel }) => {
+  const [isAllChannelsSelected, setIsAllChannelsSelected] = useState(true);
+
+  const params = useParams();
+
+  useEffect(() => {
+    if (params.id) {
+      setIsAllChannelsSelected(false);
+    } else {
+      setIsAllChannelsSelected(true);
+    }
+  }, [params.id]);
 
   return (
     <Wrapper>
-      {selectedChannel ? (
-        <SelectedChannel setSelectedChannel={setSelectedChannel} />
+      {isAllChannelsSelected ? (
+        <AllChannels setIsAllChannelsSelected={setIsAllChannelsSelected} />
       ) : (
-        <AllChannels setSelectedChannel={setSelectedChannel} />
+        <SelectedChannel
+          joinedChannel={joinedChannel}
+          setIsAllChannelsSelected={setIsAllChannelsSelected}
+        />
       )}
       <UserBannerWrapper>
         <DarkModeToggle />

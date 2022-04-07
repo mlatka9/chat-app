@@ -1,6 +1,11 @@
 import ChatPost from '../ChatPost/ChatPost';
 import ChatInput from '../ChatInput/ChatInput';
 import styled from 'styled-components';
+import { Routes, Route, useParams } from 'react-router-dom';
+import { useEffect, useLayoutEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useRef } from 'react';
 
 const Wrapper = styled.section`
   height: 100vh;
@@ -43,23 +48,39 @@ const ChatPostsWrapper = styled.div`
 `;
 
 const ChatSection = () => {
+  const { joinedChannel } = useOutletContext();
+  const channel = useSelector((state) => state.channel[joinedChannel]);
+  const posts = useSelector((state) => state.post);
+  const postEndRef = useRef(null);
+  const params = useParams();
+
+  useEffect(() => {
+    if (postEndRef.current) {
+      postEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }, [posts]);
+
+  useEffect(() => {
+    if (postEndRef.current) {
+      postEndRef.current.scrollIntoView();
+    }
+  }, [joinedChannel]);
+
+  if (!joinedChannel || joinedChannel !== params.id) return null;
+
   return (
     <Wrapper>
       <StyledHeader>
-        <h2>Front-end developers</h2>
+        <h2>{channel.name}</h2>
       </StyledHeader>
       <ChatPostsWrapper>
-        <ChatPost />
-        <ChatPost />
-        <ChatPost />
-        <ChatPost />
-        <ChatPost />
-        <ChatPost />
-        <ChatPost />
-        <ChatPost />
-        <ChatPost />
+        {posts.map((post) => (
+          <ChatPost key={post.id} post={post} />
+        ))}
+
+        <div ref={postEndRef} />
       </ChatPostsWrapper>
-      <ChatInput />
+      <ChatInput channelId={joinedChannel} />
     </Wrapper>
   );
 };

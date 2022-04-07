@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { InputWrapper, Wrapper } from './FormField.styles';
+import { InputWrapper, Wrapper, StyledInput } from './FormField.styles';
 import ErrorMessage from 'components/Profile/ErrorMessage/ErrorMessage';
 
 const FormField = ({
@@ -9,16 +9,20 @@ const FormField = ({
   error,
   type = 'text',
   icon,
+  isBig = false,
+  isTextArea,
 }) => {
   return (
     <Wrapper>
-      <InputWrapper error={error}>
-        <input
+      <InputWrapper error={error} hasIcon={icon}>
+        <StyledInput
+          as={isTextArea ? 'textarea' : 'input'}
           placeholder={label}
           type={type}
           {...register(label, options)}
-        ></input>
-        <FontAwesomeIcon icon={icon} />
+        ></StyledInput>
+        <label>{label}</label>
+        {icon ? <FontAwesomeIcon icon={icon} /> : null}
       </InputWrapper>
 
       {error && <ErrorMessage>{error}</ErrorMessage>}

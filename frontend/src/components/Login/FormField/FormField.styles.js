@@ -9,24 +9,33 @@ export const Wrapper = styled.div`
 export const InputWrapper = styled.div`
   position: relative;
   width: 100%;
-  input {
-    width: 100%;
-    border: none;
-    outline: ${({ theme, error }) =>
-      error
-        ? `1px solid  ${theme.color.red500}`
-        : `1px solid ${theme.color.grey400}`};
-    height: 48px;
-    color: ${({ theme }) => theme.color.grey300};
-    border-radius: 8px;
-    padding-left: 42px;
-    font-size: ${({ theme }) => theme.fontSize.m};
-    background-color: ${({ theme }) => theme.color.grey700};
-    &:focus {
-      outline: 2px solid ${({ theme }) => theme.color.grey200};
-      color: ${({ theme }) => theme.color.grey200};
-    }
+  textarea {
+    resize: none;
+    height: 120px;
+    padding-top: 13px;
   }
+  input:not(:placeholder-shown) + label,
+  textarea:not(:placeholder-shown) + label {
+    background-color: red;
+    transform: translate(10px, -26px);
+    background-color: ${({ theme }) => theme.color.grey800};
+    padding: 0 2px;
+    opacity: 1;
+    visibility: unset;
+  }
+  label {
+    text-transform: capitalize;
+    opacity: 0;
+    display: block;
+    position: absolute;
+    top: 13px;
+    left: 12px;
+    transform: translate(0px, 0px);
+    transition: transform 150ms ease-in-out, opacity 150ms ease-in;
+    color: ${({ theme }) => theme.color.grey200};
+    visibility: visible;
+  }
+
   svg {
     position: absolute;
     left: 12px;
@@ -37,5 +46,28 @@ export const InputWrapper = styled.div`
     path {
       fill: ${({ theme }) => theme.color.grey300};
     }
+  }
+`;
+
+export const StyledInput = styled.input`
+  width: 100%;
+  border: none;
+  transition: transform 1s ease-in-out;
+  outline: ${({ theme, error }) =>
+    error
+      ? `1px solid  ${theme.color.red500}`
+      : `1px solid ${theme.color.grey400}`};
+  height: 48px;
+  color: ${({ theme }) => theme.color.grey200};
+  border-radius: 8px;
+  padding-left: ${({ hasIcon }) => (hasIcon ? '42px' : '12px')};
+  font-size: ${({ theme }) => theme.fontSize.m};
+  background-color: ${({ theme }) => theme.color.grey700};
+  &::placeholder {
+    text-transform: capitalize;
+  }
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.color.grey200};
+    color: ${({ theme }) => theme.color.grey200};
   }
 `;

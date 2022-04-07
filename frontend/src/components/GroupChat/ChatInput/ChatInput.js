@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { createPost } from 'app/postSlice';
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
   display: flex;
   align-items: center;
   height: 52px;
@@ -19,6 +22,9 @@ const Wrapper = styled.div`
     letter-spacing: 0.6px;
     border-radius: 8px;
     color: ${({ theme }) => theme.color.grey100};
+    &:focus {
+      outline: none;
+    }
     &::placeholder {
       color: ${({ theme }) => theme.color.grey400};
     }
@@ -31,13 +37,32 @@ const Wrapper = styled.div`
     border: none;
     position: absolute;
     right: 6px;
+    cursor: pointer;
   }
 `;
 
-const ChatInput = () => {
+const ChatInput = ({ channelId }) => {
+  const dispatch = useDispatch();
+  const [inputValue, setInputValue] = useState('');
+
+  const handleAddPost = async (e) => {
+    e.preventDefault();
+    if (!inputValue) return;
+    const postBody = {
+      content: inputValue,
+      channelId,
+    };
+    await dispatch(createPost(postBody));
+    setInputValue('');
+  };
+
   return (
-    <Wrapper>
-      <input placeholder="Type a message here" />
+    <Wrapper onSubmit={handleAddPost}>
+      <input
+        placetholder="Type a message here"
+        value={inputValue}
+        onChange={({ target }) => setInputValue(target.value)}
+      />
       <button type="submit">
         <FontAwesomeIcon inverse icon={['fa', 'paper-plane']} />
       </button>

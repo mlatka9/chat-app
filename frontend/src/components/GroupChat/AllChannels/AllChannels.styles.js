@@ -39,7 +39,7 @@ export const StyledInput = styled.input`
   border: none;
   font-size: ${({ theme }) => theme.fontSize.s};
   color: ${({ theme }) => theme.color.grey200};
-  margin-bottom: 36px;
+
   color: ${({ theme }) => theme.color.grey100};
   &::placeholder {
     color: ${({ theme }) => theme.color.grey400};
@@ -48,6 +48,14 @@ export const StyledInput = styled.input`
 
 export const List = styled.ul`
   padding: 0;
+  a {
+    display: block;
+    text-decoration: none;
+
+    &:focus {
+      outline: 3px dashed grey;
+    }
+  }
 `;
 
 export const ListItem = styled.li`
@@ -73,4 +81,18 @@ export const ListItem = styled.li`
     font-size: ${({ theme }) => theme.fontSize.l};
     font-weight: ${({ theme }) => theme.fontWeight.bolder};
   }
+`;
+
+export const InputWrapper = styled.div`
+  position: relative;
+  svg {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 20px;
+  }
+  path {
+    fill: ${({ theme }) => theme.color.grey300};
+  }
+  margin-bottom: 36px;
 `;

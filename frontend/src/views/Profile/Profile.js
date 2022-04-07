@@ -19,7 +19,6 @@ import {
 const Profile = () => {
   const { currentUser, userDetails } = useAuth();
 
-  console.log(userDetails);
   const navigate = useNavigate();
 
   useEffect(() => {
