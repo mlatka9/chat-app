@@ -75,4 +75,5 @@ export const MembersListWrapper = styled.div`
 
 export const AsideContent = styled.div`
   padding: 0 32px 40px;
+  /* overflow: scroll; */
 `;

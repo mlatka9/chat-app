@@ -35,6 +35,10 @@ const Wrapper = styled.form`
   display: flex;
   flex-direction: column;
   animation: ${slideIn} 200ms ease-in-out;
+  @media (max-width: 650px) {
+    width: calc(100% - 30px);
+    padding: 40px 30px 30px;
+  }
   h2 {
     font-size: ${({ theme }) => theme.fontSize.l};
     color: ${({ theme }) => theme.color.grey100};
@@ -62,6 +66,7 @@ const AddNewChannel = ({ handleCloseForm }) => {
       abbreviation,
     };
     dispatch(createChannel(channel));
+    handleCloseForm();
   };
 
   const {

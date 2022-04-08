@@ -9,9 +9,9 @@ export const getPostsFromChannel = (channelId) => {
 };
 
 export const createPost = (postBody) => {
-  return async (dispatch) => {
-    const createdPost = await postsService.addPost(postBody);
-    dispatch(postSlice.actions.addPost(createdPost));
+  return async () => {
+    await postsService.addPost(postBody);
+    // dispatch(postSlice.actions.addPost(createdPost));
   };
 };
 

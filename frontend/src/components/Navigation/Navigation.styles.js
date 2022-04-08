@@ -49,8 +49,8 @@ export const StyledNav = styled.nav`
   display: flex;
   flex-direction: column;
   position: absolute;
-  bottom: ${({ showOnTop }) => (showOnTop ? '42px' : `-30px`)};
-  right: 0;
+  bottom: ${({ showOnTop }) => (showOnTop ? '60px' : `-30px`)};
+  right: ${({ showOnTop }) => (showOnTop ? '-26px' : `0px`)};
   transform: ${({ showOnTop }) =>
     showOnTop ? `translateY(0px)` : `translateY(100%)`};
   padding: 15px 12px;
@@ -67,6 +67,13 @@ export const StyledNav = styled.nav`
     width: 17px;
     height: 17px;
     margin-right: 5px;
+  }
+  @media (max-width: 800px) {
+    right: -80px;
+  }
+
+  @media (max-width: 650px) {
+    right: 0px;
   }
 `;
 

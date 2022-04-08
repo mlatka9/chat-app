@@ -12,8 +12,8 @@ const SocialsBox = () => {
         <button onClick={signUpWithGoogle}>
           <FontAwesomeIcon icon={['fab', 'google']} />
         </button>
-        <FontAwesomeIcon icon={['fab', 'facebook']} />
-        <FontAwesomeIcon icon={['fab', 'github']} />
+        {/* <FontAwesomeIcon icon={['fab', 'facebook']} />
+        <FontAwesomeIcon icon={['fab', 'github']} /> */}
       </Socials>
     </>
   );

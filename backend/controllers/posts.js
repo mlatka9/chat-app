@@ -2,6 +2,8 @@ const Post = require("../models/Post");
 const Person = require('../models/Person')
 const Channel = require('../models/Channel')
 const {BadRequest, Unauthenticated} = require('../errors/index')
+const {getIO} = require('../web-socket')
+
 
 const getAllPost = async (req, res) => {
     const posts = await Post.find({});
@@ -25,8 +27,6 @@ const addPost = async (req, res) => {
     const {content, channelId} = req.body;
     const personId = req.user.uid
 
-    console.log("personId", personId)
-
     const channel = await Channel.findById(channelId);
     if(!channel) {
         throw new BadRequest(`Cannot find channel with id ${channelId}`);
@@ -39,6 +39,8 @@ const addPost = async (req, res) => {
 
     const createdPost = await Post.create({content, postedBy: personId, channel: channel._id})
     const populatedCreatedPost = await createdPost.populate('postedBy');
+    const io = getIO()
+    io.to(channelId).emit('chat message', populatedCreatedPost)
     res.json(populatedCreatedPost);
 }
 

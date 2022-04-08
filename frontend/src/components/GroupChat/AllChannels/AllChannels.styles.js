@@ -47,7 +47,9 @@ export const StyledInput = styled.input`
 `;
 
 export const List = styled.ul`
-  padding: 0;
+  padding: 5px;
+  height: calc(100vh - 350px);
+  overflow-y: scroll;
   a {
     display: block;
     text-decoration: none;
@@ -62,7 +64,7 @@ export const ListItem = styled.li`
   width: 100%;
   display: flex;
   align-items: center;
-  margin-top: 22px;
+  margin-bottom: 22px;
   color: ${({ theme }) => theme.color.grey200};
   text-transform: uppercase;
   font-size: ${({ theme }) => theme.fontSize.m};
@@ -70,7 +72,7 @@ export const ListItem = styled.li`
   cursor: pointer;
   div {
     margin-right: 12px;
-    background-color: ${({ theme }) => theme.color.grey600};
+    background-color: ${({ theme }) => theme.color.grey900};
     width: 42px;
     height: 42px;
     color: ${({ theme }) => theme.color.grey200};
@@ -85,6 +87,10 @@ export const ListItem = styled.li`
 
 export const InputWrapper = styled.div`
   position: relative;
+  margin-bottom: 36px;
+  @media (max-width: 650px) {
+    margin-bottom: 20px;
+  }
   svg {
     position: absolute;
     top: 50%;
@@ -94,5 +100,4 @@ export const InputWrapper = styled.div`
   path {
     fill: ${({ theme }) => theme.color.grey300};
   }
-  margin-bottom: 36px;
 `;

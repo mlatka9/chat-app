@@ -7,9 +7,9 @@ export const lightTheme = {
     grey400: '#494d4f',
     grey500: '#828282',
 
-    grey600: '#e6e7eb',
-    grey700: '#fafafc',
-    grey800: '#fafafc',
+    grey600: '#e4e7ed',
+    grey700: '#f4f4f7',
+    grey800: '#f2f3f5',
     grey900: '#FFF',
 
     blue500: '#2F80ED',
@@ -45,7 +45,7 @@ export const darkTheme = {
     grey600: '#4d5261',
     grey700: '#21252b',
     grey800: '#1e2026',
-    grey900: '#120F13',
+    grey900: '#1a181f',
 
     blue500: '#2F80ED',
     red500: '#ff6e63',

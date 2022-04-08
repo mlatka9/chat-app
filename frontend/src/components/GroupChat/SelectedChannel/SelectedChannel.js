@@ -20,7 +20,15 @@ const SelectedChannel = ({ joinedChannel, setIsAllChannelsSelected }) => {
     setIsAllChannelsSelected(true);
   };
 
-  if (joinedChannel !== params.id) return null;
+  if (joinedChannel !== params.id)
+    return (
+      <StyledHeader>
+        <button onClick={handleBackToAllChannels}>
+          <FontAwesomeIcon icon={['fa', 'chevron-left']} />
+          <span>all channels</span>
+        </button>
+      </StyledHeader>
+    );
 
   return (
     <>
@@ -30,7 +38,6 @@ const SelectedChannel = ({ joinedChannel, setIsAllChannelsSelected }) => {
           <span>all channels</span>
         </button>
       </StyledHeader>
-
       <AsideContent>
         <ChannelInfo>
           <h2>{channel.name}</h2>

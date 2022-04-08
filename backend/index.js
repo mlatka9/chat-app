@@ -1,10 +1,14 @@
 const http = require('http');
 const app = require('./app');
+const {initializeSocket} = require('./web-socket')
 
-const server = http.createServer(app);
+const httpServer = http.createServer(app);
+
+initializeSocket(httpServer)
 
 const PORT = process.env.PORT || 5000;
 
-server.listen(PORT, () => {
+httpServer.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
 });
+

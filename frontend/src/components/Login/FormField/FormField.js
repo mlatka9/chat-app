@@ -19,6 +19,7 @@ const FormField = ({
           as={isTextArea ? 'textarea' : 'input'}
           placeholder={label}
           type={type}
+          hasIcon={icon}
           {...register(label, options)}
         ></StyledInput>
         <label>{label}</label>

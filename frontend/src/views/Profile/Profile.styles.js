@@ -5,6 +5,9 @@ export const Wrapper = styled.div`
   margin: 0 auto;
   width: 100%;
   max-width: 850px;
+  @media (max-width: 650px) {
+    padding-bottom: 20px;
+  }
 `;
 
 export const ProfileWrapper = styled.div`

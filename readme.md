@@ -6,10 +6,11 @@ Live demo: [link](https://623a4cfe1229a10009680e98--deft-griffin-b062df.netlify.
 ![s1](https://user-images.githubusercontent.com/72691985/159587072-669b9566-1cdd-4218-a992-38c8bfd33728.PNG)
 
 TODO:
+ - websockety do allchannels
+ - właściciel kanału i usuwanie
+
  - trimowanie validacji formularzy
  - połączenie z moim backendem po logowaniu z google
  - poprawić walidację obrazka
- - websockety
- - mobile layout
  - szkieletowy fallback
- - właściciel kanału i usuwanie
+ - ikona do menu mobilnego

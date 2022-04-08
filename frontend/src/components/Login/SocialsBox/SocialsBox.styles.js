@@ -21,9 +21,10 @@ export const Socials = styled.div`
     justify-content: center;
     background-color: transparent;
     &:hover svg {
-      border: 1px solid ${({ theme }) => theme.color.grey200};
+      border: 1px solid ${({ theme }) => theme.color.grey400};
+      transform: scale(1.05);
       path {
-        fill: ${({ theme }) => theme.color.grey200};
+        /* fill: ${({ theme }) => theme.color.grey200}; */
       }
     }
   }
@@ -34,8 +35,9 @@ export const Socials = styled.div`
     border-radius: 50%;
     width: 20px;
     height: 20px;
+    transition: transform 100ms ease-in-out;
     path {
-      fill: ${({ theme }) => theme.color.grey300};
+      fill: ${({ theme }) => theme.color.grey400};
     }
   }
 `;

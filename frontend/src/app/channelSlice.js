@@ -34,7 +34,13 @@ const channelSlice = createSlice({
     addChannel: (state, action) => {
       state[action.payload.id] = action.payload;
     },
+    addMemberToChannel: (state, action) => {
+      const { channelId, member } = action.payload;
+      state[channelId].members.push(member);
+    },
   },
 });
+
+export const { addMemberToChannel } = channelSlice.actions;
 
 export default channelSlice.reducer;

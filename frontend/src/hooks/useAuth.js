@@ -30,13 +30,12 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const subscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-
+      setIsInitialUser(true);
       if (user) {
         personsService
           .getPersonDetails(user.uid)
           .then(({ data }) => {
             setUserDetails(data);
-            setIsInitialUser(true);
           })
           .catch((err) => {
             console.log('cant find user ', err);

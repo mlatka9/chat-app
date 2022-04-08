@@ -33,5 +33,6 @@ export const FieldValue = styled.span`
   color: ${({ theme }) => theme.color.grey200};
   @media (max-width: 650px) {
     font-size: ${({ theme }) => theme.fontSize.m};
+    text-align: right;
   }
 `;

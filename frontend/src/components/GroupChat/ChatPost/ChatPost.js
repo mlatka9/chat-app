@@ -9,6 +9,9 @@ const timeAgo = new TimeAgo('en-US');
 const Wrapper = styled.div`
   display: flex;
   margin: 0 70px 38px;
+  @media (max-width: 650px) {
+    margin: 0 20px 30px;
+  }
   img {
     width: 42px;
     height: 42px;

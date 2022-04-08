@@ -12,6 +12,9 @@ const Wrapper = styled.form`
   border-radius: 8px;
   position: relative;
   margin: auto 70px 40px;
+  @media (max-width: 650px) {
+    margin: auto 20px 20px;
+  }
 
   input {
     background-color: transparent;
@@ -52,8 +55,8 @@ const ChatInput = ({ channelId }) => {
       content: inputValue,
       channelId,
     };
-    await dispatch(createPost(postBody));
     setInputValue('');
+    await dispatch(createPost(postBody));
   };
 
   return (

@@ -16,6 +16,8 @@ const LoginErrorMessage = styled(ErrorMessage)`
 
 export const StyledForm = styled.form`
   margin: 28px 0 32px;
+  display: flex;
+  flex-direction: column;
   button {
     width: 100%;
     margin-top: 22px;

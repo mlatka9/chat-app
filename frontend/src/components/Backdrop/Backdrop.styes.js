@@ -13,6 +13,7 @@ const fadeIn = keyframes`
 
 export const StyledDiv = styled.div`
   position: fixed;
+  z-index: 100;
   inset: 0;
   /* z-index: 1000; */
   background-color: ${({ isDark }) => (isDark ? 'rgba(0,0,0,0.4)' : 'unset')};

@@ -4,6 +4,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 14px;
+  margin-bottom: 10px;
 `;
 
 export const InputWrapper = styled.div`
@@ -18,10 +19,9 @@ export const InputWrapper = styled.div`
   textarea:not(:placeholder-shown) + label {
     background-color: red;
     transform: translate(10px, -26px);
-    background-color: ${({ theme }) => theme.color.grey800};
+    background-color: ${({ theme }) => theme.color.grey700};
     padding: 0 2px;
     opacity: 1;
-    visibility: unset;
   }
   label {
     text-transform: capitalize;
@@ -30,10 +30,12 @@ export const InputWrapper = styled.div`
     position: absolute;
     top: 13px;
     left: 12px;
-    transform: translate(0px, 0px);
+    transform: ${({ hasIcon }) =>
+      hasIcon ? 'translate(30px, 0px)' : 'translate(0px, 0px)'};
     transition: transform 150ms ease-in-out, opacity 150ms ease-in;
     color: ${({ theme }) => theme.color.grey200};
-    visibility: visible;
+
+    pointer-events: none;
   }
 
   svg {
@@ -44,7 +46,7 @@ export const InputWrapper = styled.div`
     width: 20px;
     height: 20px;
     path {
-      fill: ${({ theme }) => theme.color.grey300};
+      fill: ${({ theme }) => theme.color.grey400};
     }
   }
 `;
@@ -56,7 +58,7 @@ export const StyledInput = styled.input`
   outline: ${({ theme, error }) =>
     error
       ? `1px solid  ${theme.color.red500}`
-      : `1px solid ${theme.color.grey400}`};
+      : `1px solid ${theme.color.grey500}`};
   height: 48px;
   color: ${({ theme }) => theme.color.grey200};
   border-radius: 8px;
