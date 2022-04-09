@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {addPost,getAllPost, getPostsFromChannel} = require('../controllers/posts')
+const {addPost, getPostsFromChannel} = require('../controllers/posts')
 
 router.route('/').get(getPostsFromChannel).post(addPost)
 

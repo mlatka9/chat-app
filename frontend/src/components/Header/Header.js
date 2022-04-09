@@ -1,4 +1,4 @@
-import DarkModeToggle from 'components/DarkModeToggle/DarkModeToggle';
+import DarkModeToggle from 'components/Common/DarkModeToggle/DarkModeToggle';
 import UserBanner from 'components/UserBanner/UserBanner';
 import { StyledHeader } from './Header.styles';
 

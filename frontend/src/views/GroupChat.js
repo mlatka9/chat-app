@@ -3,13 +3,12 @@ import useAuth from 'hooks/useAuth';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import ChannelsSidebar from 'components/GroupChat/ChannelsSidebar/ChannelsSidebar';
-import ChatSection from 'components/GroupChat/ChatSection.js/ChatSection';
 import styled from 'styled-components';
 import { useState } from 'react';
-import { Routes, Route, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getChannel, addMemberToChannel } from 'app/channelSlice';
-import { getPostsFromChannel, addPost } from 'app/postSlice';
+import { getChannel, addMemberToChannel } from 'redux/channelSlice';
+import { getPostsFromChannel, addPost } from 'redux/postSlice';
 import channelService from 'service/channels';
 import { io } from 'socket.io-client';
 
@@ -17,7 +16,6 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 330px 1fr;
   height: 100vh;
-  /* background-color: red; */
   @media (max-width: 800px) {
     grid-template-columns: 250px 1fr;
   }
@@ -44,6 +42,7 @@ const GroupChat = () => {
       ]);
       setJoinedChannel(params.id);
     } catch (err) {
+      navigate('');
       console.log(err);
     }
   };
@@ -59,7 +58,7 @@ const GroupChat = () => {
     socketRef.current = io(process.env.REACT_APP_SERVER_BASE_URL);
 
     socketRef.current.on('connect', () => {
-      console.log(socketRef.current.id); // ojIckSD2jqNzOqIrAGzL
+      console.log(socketRef.current.id);
       socketRef.current.emit('join room', joinedChannel);
     });
 
@@ -73,6 +72,7 @@ const GroupChat = () => {
     });
 
     return () => socketRef.current.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [joinedChannel]);
 
   useEffect(() => {

@@ -12,7 +12,7 @@ export const InputWrapper = styled.div`
   width: 100%;
   textarea {
     resize: none;
-    height: 120px;
+    height: 140px;
     padding-top: 13px;
   }
   input:not(:placeholder-shown) + label,
@@ -34,7 +34,6 @@ export const InputWrapper = styled.div`
       hasIcon ? 'translate(30px, 0px)' : 'translate(0px, 0px)'};
     transition: transform 150ms ease-in-out, opacity 150ms ease-in;
     color: ${({ theme }) => theme.color.grey200};
-
     pointer-events: none;
   }
 
@@ -67,6 +66,7 @@ export const StyledInput = styled.input`
   background-color: ${({ theme }) => theme.color.grey700};
   &::placeholder {
     text-transform: capitalize;
+    user-select: none;
   }
   &:focus {
     outline: 2px solid ${({ theme }) => theme.color.grey200};

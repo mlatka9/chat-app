@@ -1,39 +1,19 @@
-import { useEffect, useState } from 'react';
-import useAuth from '../hooks/useAuth';
+import { useState } from 'react';
+import useAuth from '../../hooks/useAuth';
 import styled from 'styled-components';
+
 import LoginWrapper from 'components/Login/LoginWrapper/LoginWrapper';
 import { useForm } from 'react-hook-form';
 import FormField from 'components/Login/FormField/FormField';
-import Button from 'components/Button/Button';
+import Button from 'components/Common/Button/Button';
 import SocialsBox from 'components/Login/SocialsBox/SocialsBox';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import ErrorMessage from 'components/Profile/ErrorMessage/ErrorMessage';
 
-const LoginErrorMessage = styled(ErrorMessage)`
-  text-align: center;
-`;
-
-export const StyledForm = styled.form`
-  margin: 28px 0 32px;
-  display: flex;
-  flex-direction: column;
-  button {
-    width: 100%;
-    margin-top: 22px;
-  }
-`;
-
-export const LoginParapgraph = styled.p`
-  margin-top: 32px;
-  font-size: ${({ theme }) => theme.fontSize.s};
-  color: ${({ theme }) => theme.color.grey300};
-  text-align: center;
-  a {
-    text-decoration: none;
-    color: ${({ theme }) => theme.color.blue500};
-  }
-`;
+import {
+  LoginErrorMessage,
+  LoginParapgraph,
+  StyledForm,
+} from './Signup.styles';
 
 const headers = {
   mainHeader: 'Join thousands of learners from around the world',
@@ -43,7 +23,7 @@ const headers = {
 
 const Signup = () => {
   const [errorMessage, setErrorMessage] = useState();
-  const { signup, currentUser } = useAuth();
+  const { signup } = useAuth();
 
   const {
     register,
@@ -54,14 +34,6 @@ const Signup = () => {
     email: '',
     password: '',
   });
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (currentUser) {
-      navigate('/');
-    }
-  }, [currentUser, navigate]);
 
   const onSubmit = async (data) => {
     const { email, password } = data;

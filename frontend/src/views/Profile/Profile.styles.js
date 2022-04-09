@@ -32,7 +32,6 @@ export const FirstRow = styled.div`
 export const DetailsTable = styled.div`
   background-color: ${({ theme }) => theme.color.grey700};
   border-radius: 12px;
-  /* background-color: red; */
   box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.15), 0 0 40px rgba(0, 0, 0, 0.1);
   > div:first-of-type {
     border-radius: 12px 12px 0 0;

@@ -18,6 +18,13 @@ const channelSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    password: {
+        type: String,
+    },
+    owner: {
+        type: String, ref: 'Person',
+        require: [true, 'Owner is required'] 
+    },
     members: [{
         type: String, ref: 'Person',
         default: []

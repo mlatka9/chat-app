@@ -5,12 +5,11 @@ import {
   MembersListWrapper,
   StyledHeader,
   AsideContent,
+  Member,
 } from './SelectedChannel.styles';
-import { Routes, Route, useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { getChannel } from 'app/channelSlice';
-import { Link, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { SelectedChannelSkeleton } from 'components/Common/Loaders/SkeletonLoading/SkeletonLoaders';
 
 const SelectedChannel = ({ joinedChannel, setIsAllChannelsSelected }) => {
   const params = useParams();
@@ -22,12 +21,15 @@ const SelectedChannel = ({ joinedChannel, setIsAllChannelsSelected }) => {
 
   if (joinedChannel !== params.id)
     return (
-      <StyledHeader>
-        <button onClick={handleBackToAllChannels}>
-          <FontAwesomeIcon icon={['fa', 'chevron-left']} />
-          <span>all channels</span>
-        </button>
-      </StyledHeader>
+      <>
+        <StyledHeader>
+          <button onClick={handleBackToAllChannels}>
+            <FontAwesomeIcon icon={['fa', 'chevron-left']} />
+            <span>all channels</span>
+          </button>
+        </StyledHeader>
+        <SelectedChannelSkeleton />
+      </>
     );
 
   return (
@@ -47,13 +49,16 @@ const SelectedChannel = ({ joinedChannel, setIsAllChannelsSelected }) => {
           <h2>members</h2>
           <ul>
             {channel.members.map((member) => (
-              <li key={member.id}>
+              <Member key={member.id}>
                 <img
                   src={member.photoURL || PlaceholderPhoto}
                   alt={member.name}
                 />
                 <span>{member.name}</span>
-              </li>
+                {channel.owner === member.id ? (
+                  <FontAwesomeIcon icon="star" />
+                ) : null}
+              </Member>
             ))}
           </ul>
         </MembersListWrapper>

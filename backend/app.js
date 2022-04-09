@@ -7,9 +7,6 @@ const connectDB = require('./db/connect');
 
 const app = express()
 
-// const port = 5000
-// const {auth} = require('./firebase')
-
 connectDB()
     .then(() => {
         console.log('connected to MongoDB');
@@ -34,11 +31,7 @@ const {authenticationMiddleware} = require('./middleware/authentication')
 
 app.use('/api/v1/persons', authenticationMiddleware, personsRoutes)
 app.use('/api/v1/posts', authenticationMiddleware, postsRoutes)
-
 app.use('/api/v1/channels', authenticationMiddleware, channelsRoutes)
-
-
-
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)

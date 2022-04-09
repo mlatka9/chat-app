@@ -1,6 +1,6 @@
 import EditField from 'components/Profile/EditField/EditField';
 import InfoHeader from 'components/Profile/InfoHeader/InfoHeader';
-import Button from 'components/Button/Button';
+import Button from 'components/Common/Button/Button';
 import Header from 'components/Header/Header';
 import useAuth from 'hooks/useAuth';
 import { useNavigate } from 'react-router-dom';

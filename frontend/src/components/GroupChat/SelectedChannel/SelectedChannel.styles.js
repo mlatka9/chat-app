@@ -12,7 +12,7 @@ export const StyledHeader = styled.header`
   button {
     font-size: ${({ theme }) => theme.fontSize.l};
     color: ${({ theme }) => theme.color.grey300};
-    /* background-color: red; */
+
     background-color: unset;
     border: none;
     padding: 0;
@@ -38,6 +38,10 @@ export const ChannelInfo = styled.div`
   p {
     font-size: ${({ theme }) => theme.fontSize.l};
     margin-bottom: 45px;
+    line-height: 26px;
+    @media (max-width: 800px) {
+      font-size: ${({ theme }) => theme.fontSize.m};
+    }
   }
 `;
 
@@ -52,12 +56,6 @@ export const MembersListWrapper = styled.div`
 
   ul {
     padding: 0;
-  }
-
-  li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 32px;
   }
 
   img {
@@ -75,5 +73,19 @@ export const MembersListWrapper = styled.div`
 
 export const AsideContent = styled.div`
   padding: 0 32px 40px;
-  /* overflow: scroll; */
+  @media (max-width: 800px) {
+    padding: 0 20px 30px;
+  }
+`;
+
+export const Member = styled.li`
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+  svg {
+    margin-left: auto;
+    path {
+      fill: ${({ theme }) => theme.color.yellow600};
+    }
+  }
 `;

@@ -1,5 +1,4 @@
 const Post = require("../models/Post");
-const Person = require('../models/Person')
 const Channel = require('../models/Channel')
 const {BadRequest, Unauthenticated} = require('../errors/index')
 const {getIO} = require('../web-socket')

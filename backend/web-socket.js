@@ -18,8 +18,7 @@ const initializeSocket = (httpServer) => {
         socket.on('join room', (channelId) => {
             socket.join(channelId)
             console.log(`${socket.id} joined channel ${channelId}`)
-        });
-        
+        });  
     });
 }
 

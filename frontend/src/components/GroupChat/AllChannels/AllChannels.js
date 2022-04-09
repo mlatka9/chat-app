@@ -7,18 +7,15 @@ import {
   InputWrapper,
 } from './AllChannels.styles';
 import { AsideContent } from '../SelectedChannel/SelectedChannel.styles';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { getChannels, createChannel } from 'app/channelSlice';
-import { Routes, Route, useParams } from 'react-router-dom';
+import { getChannels } from 'redux/channelSlice';
 import AddNewChannel from '../AddNewChannel/AddNewChannel';
 
 const AllChannels = ({ setIsAllChannelsSelected }) => {
   const channels = useSelector((state) => state.channel);
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  // const params = useParams();
   const [isAddChannelFormOpen, setIsAddChannelOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
@@ -28,6 +25,7 @@ const AllChannels = ({ setIsAllChannelsSelected }) => {
 
   useEffect(() => {
     dispatch(getChannels()).catch((err) => console.log(err));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const channelsValues = Object.values(channels).sort((a, b) =>
@@ -65,8 +63,8 @@ const AllChannels = ({ setIsAllChannelsSelected }) => {
             >
               <ListItem>
                 <div>{channel.abbreviation}</div>
-
                 {channel.name}
+                {channel.isPrivate ? <FontAwesomeIcon icon="lock" /> : null}
               </ListItem>
             </Link>
           ))}

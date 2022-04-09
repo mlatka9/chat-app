@@ -6,4 +6,5 @@ const Loading = () => (
     <Spinner />
   </Wrapper>
 );
+
 export default Loading;

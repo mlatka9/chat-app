@@ -1,11 +1,10 @@
 const { NotFound, Unauthenticated } = require('../errors/index');
 const Channel = require('../models/Channel');
-const {StatusCodes} = require('http-status-codes')
 const {getIO} = require('../web-socket');
 const Person = require('../models/Person');
 
 const getAllChannels = async (req, res) => {
-    const channels = await Channel.find({}).select({name: 1, abbreviation: 1});
+    const channels = await Channel.find({}).select({name: 1, abbreviation: 1, isPrivate: 1});
     res.json(channels)
 }
 
@@ -19,8 +18,13 @@ const getChannel = async (req, res) => {
 }
 
 const createChannel = async (req, res) => {
-    const {name, description, abbreviation} = req.body;
-    const createdCannel = await Channel.create({name, description, abbreviation});
+
+    const channel = {
+        ...req.body,
+        owner: req.user.uid,
+        members: [req.user.uid]
+    }
+    const createdCannel = await Channel.create(channel);
     res.status(201).json(createdCannel)
 }
 
@@ -35,8 +39,11 @@ const joinChannel = async (req, res) => {
     if(isMember) {
         return res.json({message: `Person is member of channel with id ${channelId}`})
     } 
+    console.log('NIE BYŁ MEMBEREM')
 
-    if(!channel.isPrvate || channelPassword===channel.password) {
+    console.log(channel.isP)
+    if(!channel.isPrivate || channelPassword===channel.password) {
+        console.log('CO JEST ??')
         channel.members = channel.members.concat(personId)
         await channel.save()
         const person = await Person.findById(personId)

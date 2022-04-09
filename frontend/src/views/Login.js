@@ -1,14 +1,12 @@
 import LoginWrapper from 'components/Login/LoginWrapper/LoginWrapper';
-import { StyledForm } from './Signup';
+import { StyledForm, LoginParapgraph } from './Signup/Signup.styles';
 import { useForm } from 'react-hook-form';
 import FormField from 'components/Login/FormField/FormField';
-import Button from 'components/Button/Button';
+import Button from 'components/Common/Button/Button';
 import SocialsBox from 'components/Login/SocialsBox/SocialsBox';
-import { LoginParapgraph } from './Signup';
 import { Link } from 'react-router-dom';
 import useAuth from 'hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ErrorMessage from 'components/Profile/ErrorMessage/ErrorMessage';
 import styled from 'styled-components';
 
@@ -17,7 +15,7 @@ const LoginErrorMessage = styled(ErrorMessage)`
 `;
 
 const Login = () => {
-  const { loginUser, currentUser } = useAuth();
+  const { loginUser } = useAuth();
   const [errorMessage, setErrorMessage] = useState();
   const {
     register,
@@ -27,7 +25,6 @@ const Login = () => {
     email: '',
     password: '',
   });
-  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     const { email, password } = data;
@@ -38,12 +35,6 @@ const Login = () => {
       setErrorMessage(err.message);
     }
   };
-
-  useEffect(() => {
-    if (currentUser) {
-      navigate('/profile');
-    }
-  }, [currentUser, navigate]);
 
   return (
     <LoginWrapper header="Login">

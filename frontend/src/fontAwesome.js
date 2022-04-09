@@ -1,5 +1,5 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-// import { fab } from '@fortawesome/free-brands-svg-icons';
+
 import {
   faFacebook,
   faGoogle,
@@ -18,6 +18,7 @@ import {
   faChevronLeft,
   faPaperPlane,
   faMagnifyingGlass,
+  faStar,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -34,5 +35,6 @@ library.add(
   faPlus,
   faChevronLeft,
   faPaperPlane,
-  faMagnifyingGlass
+  faMagnifyingGlass,
+  faStar
 );

@@ -22,19 +22,33 @@ import personsService from 'service/persons';
 const provider = new GoogleAuthProvider();
 const AuthContext = createContext();
 
+const retrivingUserStateEnum = {
+  FETCHING_USER: 'fetchingUser',
+  FETCHING_USER_DATA: 'fetchingUserData',
+  USER_AVAILABLE: 'userAvailable',
+  USER_NOT_AVAILABLE: 'userNotAvailable',
+};
+
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [userDetails, setUserDetails] = useState(null);
-  const [isInitialUser, setIsInitialUser] = useState(false);
+
+  const [retrivingUserState, setRetrivingUserState] = useState(
+    retrivingUserStateEnum.FETCHING_USER
+  );
 
   useEffect(() => {
     const subscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      setIsInitialUser(true);
+
+      console.log(user);
       if (user) {
+        setRetrivingUserState(retrivingUserStateEnum.FETCHING_USER_DATA);
         personsService
           .getPersonDetails(user.uid)
           .then(({ data }) => {
+            console.log(' mam detale ');
+            setRetrivingUserState(retrivingUserStateEnum.USER_AVAILABLE);
             setUserDetails(data);
           })
           .catch((err) => {
@@ -43,6 +57,7 @@ export const AuthProvider = ({ children }) => {
       } else {
         setCurrentUser(null);
         setUserDetails(null);
+        setRetrivingUserState(retrivingUserStateEnum.USER_NOT_AVAILABLE);
       }
     });
 
@@ -56,6 +71,7 @@ export const AuthProvider = ({ children }) => {
         email,
         password
       );
+      console.log('dopiero co stworzyłem użytkownika ');
 
       const data = {
         id: response.user.uid,
@@ -71,7 +87,9 @@ export const AuthProvider = ({ children }) => {
         data,
         { headers }
       );
+      console.log('utworzyłem detale na serwerzze ');
       setUserDetails(createdUser.data);
+      setRetrivingUserState(retrivingUserStateEnum.USER_AVAILABLE);
     } catch (err) {
       if (err.code === 'auth/email-already-in-use') {
         throw new CustomFirebaseError(
@@ -181,7 +199,8 @@ export const AuthProvider = ({ children }) => {
   const value = {
     currentUser,
     userDetails,
-    isInitialUser,
+    retrivingUserState,
+    retrivingUserStateEnum,
     signup,
     signUpWithGoogle,
     logoutUser,

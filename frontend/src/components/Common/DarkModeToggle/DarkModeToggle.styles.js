@@ -16,17 +16,15 @@ export const Wrapper = styled.div`
     display: block;
     border-radius: 30px;
     transition: background-color 200ms ease-in-out;
-    /* background-color: ${({ theme, isLight }) =>
-      isLight ? theme.color.veryDarkGrey : theme.color.veryDarkGrey}; */
     background-color: ${({ theme }) => theme.color.grey300};
     display: flex;
     align-items: center;
     padding: 5px;
   }
-  input:focus {
+  input:focus-visible {
     outline: none;
   }
-  input:focus + label {
+  input:focus-visible + label {
     outline: 3px dashed grey;
   }
   span {

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useAuth from 'hooks/useAuth';
 import { LogoutButton, NavItem, StyledNav } from './Navigation.styles';
-import Backdrop from 'components/Backdrop/Backdrop';
+import Backdrop from 'components/Common/Backdrop/Backdrop';
 
 const Navigation = ({ setIsNavOpen, showOnTop }) => {
   const { logoutUser } = useAuth();

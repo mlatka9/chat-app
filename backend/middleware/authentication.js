@@ -1,6 +1,5 @@
 const { Unauthenticated, BadRequest } = require("../errors/index");
 const { auth } = require('../firebase');
-const Channel = require("../models/Channel");
 
 const authenticationMiddleware = async (req, res, next) => {
     const authorizationHeader = req.headers.authorization;

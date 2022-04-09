@@ -8,6 +8,7 @@ const StyledButton = styled.button`
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  user-select: none;
 `;
 
 const Button = ({ children }) => {

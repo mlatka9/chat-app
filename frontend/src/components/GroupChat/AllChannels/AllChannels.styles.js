@@ -9,7 +9,9 @@ export const StyledHeader = styled.header`
   padding: 0 32px;
   box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2);
   margin-bottom: 25px;
-
+  @media (max-width: 800px) {
+    padding: 0 20px;
+  }
   h1 {
     font-size: ${({ theme }) => theme.fontSize.l};
     color: ${({ theme }) => theme.color.grey300};
@@ -49,12 +51,12 @@ export const StyledInput = styled.input`
 export const List = styled.ul`
   padding: 5px;
   height: calc(100vh - 350px);
-  overflow-y: scroll;
+  overflow-y: auto;
   a {
     display: block;
     text-decoration: none;
 
-    &:focus {
+    &:focus-visible {
       outline: 3px dashed grey;
     }
   }
@@ -73,7 +75,7 @@ export const ListItem = styled.li`
   div {
     margin-right: 12px;
     background-color: ${({ theme }) => theme.color.grey900};
-    width: 42px;
+    min-width: 42px;
     height: 42px;
     color: ${({ theme }) => theme.color.grey200};
     display: flex;
@@ -82,6 +84,13 @@ export const ListItem = styled.li`
     border-radius: 8px;
     font-size: ${({ theme }) => theme.fontSize.l};
     font-weight: ${({ theme }) => theme.fontWeight.bolder};
+  }
+
+  svg {
+    margin-left: auto;
+    path {
+      fill: ${({ theme }) => theme.color.grey400};
+    }
   }
 `;
 

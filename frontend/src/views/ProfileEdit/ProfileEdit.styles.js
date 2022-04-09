@@ -50,7 +50,6 @@ export const ChangePhoto = styled.div`
     border-radius: 8px;
   }
   input {
-    /* display: none; */
     opacity: 0;
     background-color: pink;
     position: absolute;

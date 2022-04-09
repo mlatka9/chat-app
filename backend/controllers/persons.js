@@ -1,4 +1,4 @@
-const { NotFound, Unauthenticated, BadRequest } = require("../errors/index");
+const { NotFound, Unauthenticated } = require("../errors/index");
 const {StatusCodes} = require('http-status-codes');
 const Person = require("../models/Person");
 

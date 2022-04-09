@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './hooks/useAuth';
 import { DarkModeProvider } from './hooks/useDarkMode';
 import { Provider } from 'react-redux';
-import store from './app/store';
+import store from './redux/store';
 
 ReactDOM.render(
   <Provider store={store}>

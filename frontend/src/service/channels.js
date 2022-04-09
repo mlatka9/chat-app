@@ -20,18 +20,11 @@ const getChannel = async (id) => {
 };
 
 const createChannel = async (channel) => {
-  const { name, description, abbreviation } = channel;
   const headers = {
     Authorization: `Bearer ${auth.currentUser.accessToken}`,
   };
 
-  const body = {
-    name,
-    description,
-    abbreviation,
-  };
-
-  const response = await axios.post(`${baseURL}`, body, { headers });
+  const response = await axios.post(`${baseURL}`, channel, { headers });
   return response.data;
 };
 

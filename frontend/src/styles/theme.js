@@ -15,6 +15,7 @@ export const lightTheme = {
     blue500: '#2F80ED',
     red500: '#d42c20',
     yellow500: 'yellow',
+    yellow600: '#ffcb0d',
   },
   fontWeight: {
     normal: 400,
@@ -29,6 +30,7 @@ export const lightTheme = {
     s: '14px',
     xs: '12px',
   },
+  animationDuration: '250ms',
 };
 
 export const darkTheme = {

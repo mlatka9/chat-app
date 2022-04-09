@@ -24,7 +24,6 @@ export const Socials = styled.div`
       border: 1px solid ${({ theme }) => theme.color.grey400};
       transform: scale(1.05);
       path {
-        /* fill: ${({ theme }) => theme.color.grey200}; */
       }
     }
   }

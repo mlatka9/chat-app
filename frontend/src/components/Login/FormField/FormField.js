@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InputWrapper, Wrapper, StyledInput } from './FormField.styles';
 import ErrorMessage from 'components/Profile/ErrorMessage/ErrorMessage';
+import WordCounter from 'components/Common/WordCounter/WordCounter';
 
 const FormField = ({
   label,
@@ -9,8 +10,9 @@ const FormField = ({
   error,
   type = 'text',
   icon,
-  isBig = false,
   isTextArea,
+  hasCounter,
+  watch,
 }) => {
   return (
     <Wrapper>
@@ -22,8 +24,12 @@ const FormField = ({
           hasIcon={icon}
           {...register(label, options)}
         ></StyledInput>
+
         <label>{label}</label>
         {icon ? <FontAwesomeIcon icon={icon} /> : null}
+        {hasCounter ? (
+          <WordCounter text={watch('description') || ''} maxLength={200} />
+        ) : null}
       </InputWrapper>
 
       {error && <ErrorMessage>{error}</ErrorMessage>}
