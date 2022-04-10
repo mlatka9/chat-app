@@ -47,7 +47,6 @@ export const AuthProvider = ({ children }) => {
         personsService
           .getPersonDetails(user.uid)
           .then(({ data }) => {
-            console.log(' mam detale ');
             setRetrivingUserState(retrivingUserStateEnum.USER_AVAILABLE);
             setUserDetails(data);
           })
@@ -64,6 +63,29 @@ export const AuthProvider = ({ children }) => {
     return subscribe;
   }, []);
 
+  const createUserInCustomBacked = async (response) => {
+    const data = {
+      id: response.user.uid,
+      name: response.user.email,
+    };
+
+    if (response.user.photoURL) {
+      data.photoURL = response.user.photoURL;
+    }
+
+    const headers = {
+      Authorization: `Bearer ${response.user.accessToken}`,
+    };
+
+    const createdUser = await axios.post(
+      `${process.env.REACT_APP_SERVER_BASE_URL}/api/v1/persons`,
+      data,
+      { headers }
+    );
+    setUserDetails(createdUser.data);
+    setRetrivingUserState(retrivingUserStateEnum.USER_AVAILABLE);
+  };
+
   const signup = async (email, password) => {
     try {
       const response = await createUserWithEmailAndPassword(
@@ -71,25 +93,7 @@ export const AuthProvider = ({ children }) => {
         email,
         password
       );
-      console.log('dopiero co stworzyłem użytkownika ');
-
-      const data = {
-        id: response.user.uid,
-        name: response.user.email,
-      };
-
-      const headers = {
-        Authorization: `Bearer ${response.user.accessToken}`,
-      };
-
-      const createdUser = await axios.post(
-        `${process.env.REACT_APP_SERVER_BASE_URL}/api/v1/persons`,
-        data,
-        { headers }
-      );
-      console.log('utworzyłem detale na serwerzze ');
-      setUserDetails(createdUser.data);
-      setRetrivingUserState(retrivingUserStateEnum.USER_AVAILABLE);
+      await createUserInCustomBacked(response);
     } catch (err) {
       if (err.code === 'auth/email-already-in-use') {
         throw new CustomFirebaseError(
@@ -116,15 +120,7 @@ export const AuthProvider = ({ children }) => {
 
   const signUpWithGoogle = async () => {
     const response = await signInWithPopup(auth, provider);
-
-    const docRef = doc(db, 'users', response.user.uid);
-    const docSnap = await getDoc(docRef);
-    if (!docSnap.exists()) {
-      await setDoc(doc(db, 'users', response.user.uid), {
-        bio: '',
-        phoneNumber: '',
-      });
-    }
+    await createUserInCustomBacked(response);
   };
 
   const reAuthUser = async (password) => {

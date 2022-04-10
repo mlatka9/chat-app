@@ -10,9 +10,10 @@ import {
 } from './ChannelsSidebar.styles';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import HamburgerIcon from 'components/Common/HamburgerIcon/HamburgerIcon';
 
 const ChannelsSidebar = ({ joinedChannel }) => {
-  const [isAllChannelsSelected, setIsAllChannelsSelected] = useState(true);
+  const [isAllChannelsSelected, setIsAllChannelsSelected] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleToggleMenu = () => {
@@ -29,9 +30,13 @@ const ChannelsSidebar = ({ joinedChannel }) => {
     }
   }, [params.id]);
 
+  if (isAllChannelsSelected === null) return null;
+
   return (
     <Wrapper isMobileMenuOpen={isMobileMenuOpen}>
-      <MobileToggle onClick={handleToggleMenu}>x</MobileToggle>
+      <MobileToggle onClick={handleToggleMenu} isOpen={isMobileMenuOpen}>
+        <HamburgerIcon isOpen={isMobileMenuOpen} />
+      </MobileToggle>
       {isAllChannelsSelected ? (
         <AllChannels setIsAllChannelsSelected={setIsAllChannelsSelected} />
       ) : (

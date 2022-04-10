@@ -43,11 +43,12 @@ export const StyledBackLink = styled(Link)`
 export const ChangePhoto = styled.div`
   display: flex;
   align-items: center;
-
+  flex-wrap: wrap;
   img {
     height: 72px;
     width: 72px;
     border-radius: 8px;
+    margin-bottom: 10px;
   }
   input {
     opacity: 0;
@@ -63,12 +64,8 @@ export const ChangePhoto = styled.div`
     font-size: ${({ theme }) => theme.fontSize.s};
     text-transform: uppercase;
     padding: 2px;
+    margin-right: 28px;
     cursor: pointer;
-  }
-  span {
-    color: ${({ theme }) => theme.color.grey200};
-    font-size: ${({ theme }) => theme.fontSize.s};
-    margin-left: 28px;
   }
 `;
 
@@ -84,4 +81,11 @@ export const FileInputWrapper = styled.div`
 export const StyledSpan = styled.span`
   margin-left: 20px;
   color: ${({ theme }) => theme.color.grey200};
+`;
+
+export const PhotoName = styled.span`
+  color: ${({ theme }) => theme.color.grey200};
+  font-size: ${({ theme }) => theme.fontSize.s};
+  margin-right: 28px;
+  width: min-content;
 `;

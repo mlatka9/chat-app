@@ -1,9 +1,9 @@
 const router = require('express').Router();
 
-const {addPerson, getPerson, getAllPersons, updatePerson} = require('../controllers/persons')
+const {addPerson, getPerson, getAllPersons, updatePerson} = require('../controllers/persons');
 
-router.route("/").get(getAllPersons).post(addPerson)
-router.route("/:id").get(getPerson).patch(updatePerson);
+router.route('/').get(getAllPersons).post(addPerson);
+router.route('/:id').get(getPerson).patch(updatePerson);
 
 
 

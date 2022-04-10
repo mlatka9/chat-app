@@ -59,4 +59,29 @@ const ChatSectionSkeleton = () => (
   </ChatSectionSkeletonWrapper>
 );
 
-export { SelectedChannelSkeleton, ChatSectionSkeleton };
+const SingleChannel = ({ size }) => (
+  <div>
+    <StyledDiv
+      height="42"
+      width="42"
+      inline
+      marginRight="10"
+      marginBottom="22"
+      borderRadius="8"
+    />
+    <StyledDiv height="35" width={size} inline marginBottom="22" />
+  </div>
+);
+
+const AllChannelsSkeleton = () => (
+  <>
+    <SingleChannel size="150" />
+    <SingleChannel size="130" />
+    <SingleChannel size="150" />
+    <SingleChannel size="140" />
+    <SingleChannel size="160" />
+    <SingleChannel size="150" />
+  </>
+);
+
+export { SelectedChannelSkeleton, ChatSectionSkeleton, AllChannelsSkeleton };

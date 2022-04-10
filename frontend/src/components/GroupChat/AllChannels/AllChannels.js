@@ -12,8 +12,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getChannels } from 'redux/channelSlice';
 import AddNewChannel from '../AddNewChannel/AddNewChannel';
+import { AllChannelsSkeleton } from 'components/Common/Loaders/SkeletonLoading/SkeletonLoaders';
 
 const AllChannels = ({ setIsAllChannelsSelected }) => {
+  const [isAllChannelsLoading, setIsAllChannelsLoading] = useState(true);
   const channels = useSelector((state) => state.channel);
   const dispatch = useDispatch();
   const [isAddChannelFormOpen, setIsAddChannelOpen] = useState(false);
@@ -24,7 +26,10 @@ const AllChannels = ({ setIsAllChannelsSelected }) => {
   };
 
   useEffect(() => {
-    dispatch(getChannels()).catch((err) => console.log(err));
+    dispatch(getChannels())
+      .then(() => setIsAllChannelsLoading(false))
+      .catch((err) => console.log(err));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -55,19 +60,23 @@ const AllChannels = ({ setIsAllChannelsSelected }) => {
           <FontAwesomeIcon icon={['fa', 'magnifying-glass']} />
         </InputWrapper>
         <List>
-          {filteredChannelsValues.map((channel, index) => (
-            <Link
-              onClick={() => setIsAllChannelsSelected(false)}
-              to={`/chat/${channel.id}`}
-              key={index}
-            >
-              <ListItem>
-                <div>{channel.abbreviation}</div>
-                {channel.name}
-                {channel.isPrivate ? <FontAwesomeIcon icon="lock" /> : null}
-              </ListItem>
-            </Link>
-          ))}
+          {isAllChannelsLoading ? (
+            <AllChannelsSkeleton />
+          ) : (
+            filteredChannelsValues.map((channel, index) => (
+              <Link
+                onClick={() => setIsAllChannelsSelected(false)}
+                to={`/chat/${channel.id}`}
+                key={index}
+              >
+                <ListItem>
+                  <div>{channel.abbreviation}</div>
+                  {channel.name}
+                  {channel.isPrivate ? <FontAwesomeIcon icon="lock" /> : null}
+                </ListItem>
+              </Link>
+            ))
+          )}
         </List>
       </AsideContent>
       {isAddChannelFormOpen ? (

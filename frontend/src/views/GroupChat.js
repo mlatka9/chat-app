@@ -11,6 +11,7 @@ import { getChannel, addMemberToChannel } from 'redux/channelSlice';
 import { getPostsFromChannel, addPost } from 'redux/postSlice';
 import channelService from 'service/channels';
 import { io } from 'socket.io-client';
+import ReauthenticatePopUp from 'components/Profile/ReauthenticatePopUp/ReauthenticatePopUp';
 
 const Wrapper = styled.div`
   display: grid;
@@ -26,6 +27,7 @@ const Wrapper = styled.div`
 
 const GroupChat = () => {
   const [joinedChannel, setJoinedChannel] = useState(null);
+  const [isReauthPopupOpen, setIsReauthPopupOpen] = useState(false);
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -33,24 +35,37 @@ const GroupChat = () => {
 
   const params = useParams();
 
-  const getChannelData = async () => {
-    try {
-      await channelService.joinChannel(params.id);
-      await Promise.all([
-        dispatch(getChannel(params.id)),
-        dispatch(getPostsFromChannel(params.id)),
-      ]);
-      setJoinedChannel(params.id);
-    } catch (err) {
-      navigate('');
-      console.log(err);
-    }
+  const getChannelData = async (channelPassword) => {
+    await channelService.joinChannel(params.id, channelPassword);
+    await Promise.all([
+      dispatch(getChannel(params.id)),
+      dispatch(getPostsFromChannel(params.id)),
+    ]);
+  };
+
+  const handleReauthSubmit = async (channelPassword) => {
+    await getChannelData(channelPassword);
+    setJoinedChannel(params.id);
+    setIsReauthPopupOpen(false);
+  };
+
+  const handleReauthCancel = () => {
+    setIsReauthPopupOpen(false);
+    navigate('');
   };
 
   useEffect(() => {
     if (!params.id) return;
-
-    getChannelData();
+    getChannelData()
+      .then(() => setJoinedChannel(params.id))
+      .catch((err) => {
+        if (err.response.status === 401) {
+          console.log(err);
+          setIsReauthPopupOpen(true);
+        } else {
+          navigate('');
+        }
+      });
   }, [params.id]);
 
   useEffect(() => {
@@ -58,12 +73,10 @@ const GroupChat = () => {
     socketRef.current = io(process.env.REACT_APP_SERVER_BASE_URL);
 
     socketRef.current.on('connect', () => {
-      console.log(socketRef.current.id);
       socketRef.current.emit('join room', joinedChannel);
     });
 
     socketRef.current.on('chat message', (message) => {
-      console.log('new message', message);
       dispatch(addPost(message));
     });
 
@@ -86,10 +99,19 @@ const GroupChat = () => {
   }
 
   return (
-    <Wrapper>
-      <ChannelsSidebar joinedChannel={joinedChannel} />
-      <Outlet context={{ joinedChannel }} />
-    </Wrapper>
+    <>
+      <Wrapper>
+        <ChannelsSidebar joinedChannel={joinedChannel} />
+        <Outlet context={{ joinedChannel }} />
+      </Wrapper>
+      {isReauthPopupOpen ? (
+        <ReauthenticatePopUp
+          onSubmit={handleReauthSubmit}
+          onCancel={handleReauthCancel}
+          headerText="Provide password to channel"
+        />
+      ) : null}
+    </>
   );
 };
 

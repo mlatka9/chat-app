@@ -44,3 +44,11 @@ export const Wrapper = styled.form`
     align-self: flex-end;
   }
 `;
+
+export const ButtonsWrapper = styled.div`
+  display: flex;
+  margin-left: auto;
+  button:first-of-type {
+    margin-right: 15px;
+  }
+`;

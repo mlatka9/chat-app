@@ -28,13 +28,14 @@ const createChannel = async (channel) => {
   return response.data;
 };
 
-const joinChannel = async (channelId) => {
+const joinChannel = async (channelId, channelPassword = '') => {
   const headers = {
     Authorization: `Bearer ${auth.currentUser.accessToken}`,
   };
   const response = await axios({
     method: 'post',
     url: `${baseURL}/${channelId}`,
+    data: { channelPassword },
     headers,
   });
   return response.data;

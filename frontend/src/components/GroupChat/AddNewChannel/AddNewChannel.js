@@ -6,7 +6,7 @@ import Button from 'components/Common/Button/Button';
 import { createChannel } from 'redux/channelSlice';
 import { useDispatch } from 'react-redux';
 import FormCheckbox from 'components/Common/FormCheckbox/FormCheckbox';
-import { Wrapper } from './AddNewChannel.styles';
+import { Wrapper, ButtonsWrapper } from './AddNewChannel.styles';
 
 const modalRoot = document.querySelector('#modal-root');
 
@@ -50,7 +50,6 @@ const AddNewChannel = ({ handleCloseForm }) => {
   });
 
   const isPrvateChecked = watch('private channel');
-  const description = watch('description');
 
   return createPortal(
     <>
@@ -63,7 +62,6 @@ const AddNewChannel = ({ handleCloseForm }) => {
           }}
           error={errors.name?.message}
           register={register}
-          // icon="envelope"
         ></FormField>
         <FormField
           label="description"
@@ -79,7 +77,6 @@ const AddNewChannel = ({ handleCloseForm }) => {
           isTextArea
           hasCounter
           watch={watch}
-          // icon="envelope"
         ></FormField>
         <FormField
           label="abbreviation"
@@ -92,7 +89,6 @@ const AddNewChannel = ({ handleCloseForm }) => {
           }}
           error={errors.abbreviation?.message}
           register={register}
-          // icon="envelope"
         ></FormField>
 
         <FormCheckbox
@@ -103,6 +99,7 @@ const AddNewChannel = ({ handleCloseForm }) => {
         {isPrvateChecked ? (
           <FormField
             label="password"
+            type="password"
             options={{
               required: 'Password is required',
               minLength: {
@@ -112,13 +109,16 @@ const AddNewChannel = ({ handleCloseForm }) => {
             }}
             error={errors.password?.message}
             register={register}
-            // icon="envelope"
           ></FormField>
         ) : null}
-
-        <Button>Add</Button>
+        <ButtonsWrapper>
+          <Button type="button" isAccent onClick={handleCloseForm}>
+            Cancel
+          </Button>
+          <Button>Add</Button>
+        </ButtonsWrapper>
       </Wrapper>
-      <Backdrop onClick={handleCloseForm} isDark isAnimated />
+      <Backdrop isDark isAnimated />
     </>,
     modalRoot
   );

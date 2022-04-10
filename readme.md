@@ -7,10 +7,5 @@ Live demo: [link](https://623a4cfe1229a10009680e98--deft-griffin-b062df.netlify.
 
 TODO:
 
- - właściciel kanału i usuwanie
- - trimowanie validacji formularzy
- - połączenie z moim backendem po logowaniu z google
- - poprawić walidację obrazka
- - szkieletowy fallback
+ - usuwanie kanału
  - ikona do menu mobilnego
- - szkieletowy layout na all channles

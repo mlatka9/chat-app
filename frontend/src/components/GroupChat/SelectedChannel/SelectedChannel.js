@@ -56,7 +56,7 @@ const SelectedChannel = ({ joinedChannel, setIsAllChannelsSelected }) => {
                 />
                 <span>{member.name}</span>
                 {channel.owner === member.id ? (
-                  <FontAwesomeIcon icon="star" />
+                  <FontAwesomeIcon icon="crown" />
                 ) : null}
               </Member>
             ))}

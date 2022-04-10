@@ -33,7 +33,17 @@ export const Wrapper = styled.aside`
 export const MobileToggle = styled.button`
   width: 40px;
   height: 40px;
-  position: fixed;
+  position: absolute;
   top: 10px;
-  right: -40px;
+  right: -42px;
+  transition: transform 200ms ease-in-out;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  padding: 3px;
+  border-radius: 3px;
+  display: none;
+  @media (max-width: 650px) {
+    display: block;
+  }
 `;

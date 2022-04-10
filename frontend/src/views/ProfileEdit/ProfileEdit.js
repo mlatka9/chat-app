@@ -13,15 +13,17 @@ import {
   FileInputWrapper,
   ProfileEditWrapper,
   StyledSpan,
+  PhotoName,
 } from './ProfileEdit.styles';
 import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import imagePlaceholder from 'assets/image-placeholder.jpeg';
 import ReauthenticatePopUp from 'components/Profile/ReauthenticatePopUp/ReauthenticatePopUp';
 import { CustomFirebaseError } from 'errors/CustomFirebaseError';
+import ErrorMessage from 'components/Profile/ErrorMessage/ErrorMessage';
 
 const ProfileEdit = () => {
-  const { currentUser, updateUserProfile, userDetails } = useAuth();
+  const { currentUser, updateUserProfile, userDetails, reAuthUser } = useAuth();
   const [isUpdating, setIsUpdating] = useState(false);
   const navigate = useNavigate();
 
@@ -58,6 +60,7 @@ const ProfileEdit = () => {
     } catch (err) {
       if (err instanceof CustomFirebaseError) {
         setReauthpopupOpen(true);
+        setIsUpdating(false);
         return;
       }
     }
@@ -67,6 +70,12 @@ const ProfileEdit = () => {
   if (!currentUser) {
     return null;
   }
+
+  const validatePhoto = (photo) => {
+    console.log(photo);
+    if (!photo[0]) return;
+    return photo[0].size < 2097152;
+  };
 
   const isUserCreatedByEmail =
     currentUser?.providerData[0].providerId === 'password';
@@ -90,17 +99,25 @@ const ProfileEdit = () => {
             />
             <FileInputWrapper>
               <input
-                {...register('photo')}
+                {...register('photo', {
+                  validate: validatePhoto,
+                })}
                 type="file"
                 id="avatar"
                 accept="image/*"
                 {...(isUpdating ? { onChange: () => {} } : {})}
                 disabled={isUpdating}
               ></input>
+
               <label htmlFor="avatar">change photo</label>
             </FileInputWrapper>
 
-            {watchPhoto.length > 0 ? <span>{watchPhoto[0].name}</span> : null}
+            {watchPhoto.length > 0 ? (
+              <PhotoName>{watchPhoto[0].name}</PhotoName>
+            ) : null}
+            {errors.photo?.type === 'validate' && (
+              <ErrorMessage>Photo max size is 2MB</ErrorMessage>
+            )}
           </ChangePhoto>
           <EditField label="name" register={register} isUpdating={isUpdating} />
           <EditField
@@ -156,8 +173,16 @@ const ProfileEdit = () => {
           {isUpdating && <StyledSpan>updating...</StyledSpan>}
         </EditWrapper>
       </ProfileEditWrapper>
+
       {reauthPopupOpen && (
-        <ReauthenticatePopUp handleSubmit={handleSubmit(onSubmit)} />
+        <ReauthenticatePopUp
+          headerText="Reauthenticate yourselft"
+          onSubmit={async (password) => {
+            await reAuthUser(password);
+            setReauthpopupOpen(false);
+          }}
+          onCancel={() => setReauthpopupOpen(false)}
+        />
       )}
     </Wrapper>
   );

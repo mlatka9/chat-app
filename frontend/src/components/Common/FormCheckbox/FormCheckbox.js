@@ -49,7 +49,6 @@ const Wrapper = styled.label`
 `;
 
 const FormCheckbox = ({ label, register, isSelected }) => {
-  console.log(isSelected);
   return (
     <Wrapper isSelected={isSelected} htmlFor="form-checkbox">
       <input type="checkbox" id="form-checkbox" {...register(label)} />

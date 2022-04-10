@@ -19,6 +19,7 @@ import {
   faPaperPlane,
   faMagnifyingGlass,
   faStar,
+  faCrown,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -36,5 +37,6 @@ library.add(
   faChevronLeft,
   faPaperPlane,
   faMagnifyingGlass,
-  faStar
+  faStar,
+  faCrown
 );

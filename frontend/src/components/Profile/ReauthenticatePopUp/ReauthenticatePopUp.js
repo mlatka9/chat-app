@@ -1,40 +1,57 @@
 import Button from 'components/Common/Button/Button';
-import useAuth from 'hooks/useAuth';
 import { createPortal } from 'react-dom';
+import { useForm } from 'react-hook-form';
 
 import { useState } from 'react';
-import { Wrapper } from './ReauthenticatePopUp.styles';
+import { Wrapper, ButtonsWrapper } from './ReauthenticatePopUp.styles';
+import Backdrop from 'components/Common/Backdrop/Backdrop';
+import FormField from 'components/Login/FormField/FormField';
 
 const modalRoot = document.querySelector('#modal-root');
 
-const ReauthenticatePopUp = ({ handleSubmit }) => {
-  const { reAuthUser } = useAuth();
+const ReauthenticatePopUp = ({ onSubmit, onCancel, headerText }) => {
   const [errorMessage, setErrorMessage] = useState('');
-  const [formValue, setFormValue] = useState('');
 
-  const handleReAuth = async (e) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm();
+
+  const password = watch('password');
+
+  const handleOnClick = async () => {
     try {
-      await reAuthUser(formValue);
-      handleSubmit();
+      await onSubmit(password);
     } catch (err) {
-      console.log({ err });
-      setErrorMessage('Invalid password');
-      return;
+      setErrorMessage('Wrong password! Try again');
     }
   };
 
   return createPortal(
-    <Wrapper onSubmit={handleReAuth}>
-      <h2>Reauthenticate yourselft</h2>
-      <input
-        type="password"
-        value={formValue}
-        onChange={({ target }) => setFormValue(target.value)}
-      />
-      <Button type="submit">Submit</Button>
-      {errorMessage ? <span>{errorMessage}</span> : null}
-    </Wrapper>,
+    <>
+      <Wrapper onSubmit={handleSubmit(handleOnClick)}>
+        <h2>{headerText}</h2>
+        <FormField
+          type="password"
+          label="password"
+          options={{
+            required: 'Password is required',
+          }}
+          error={errors.password?.message}
+          register={register}
+        />
+        <ButtonsWrapper>
+          <Button type="button" isAccent onClick={onCancel}>
+            Cancel
+          </Button>
+          <Button>Submit</Button>
+        </ButtonsWrapper>
+        {errorMessage ? <span>{errorMessage}</span> : null}
+      </Wrapper>
+      <Backdrop isAnimated isDark></Backdrop>
+    </>,
     modalRoot
   );
 };
