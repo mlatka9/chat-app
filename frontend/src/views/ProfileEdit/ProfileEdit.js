@@ -72,7 +72,6 @@ const ProfileEdit = () => {
   }
 
   const validatePhoto = (photo) => {
-    console.log(photo);
     if (!photo[0]) return;
     return photo[0].size < 2097152;
   };
