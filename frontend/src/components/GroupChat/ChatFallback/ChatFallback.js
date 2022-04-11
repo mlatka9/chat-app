@@ -8,13 +8,13 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: flex-end;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1000px) {
     padding: 50px 50px;
   }
 
   h2,
   p {
-    width: 500px;
+    max-width: 500px;
   }
   h2 {
     font-size: 50px;
@@ -23,8 +23,8 @@ const Wrapper = styled.div`
     letter-spacing: 4px;
     line-height: 50px;
     margin-bottom: 50px;
-    @media (max-width: 900px) {
-      font-size: 40px;
+    @media (max-width: 1000px) {
+      font-size: 38px;
     }
   }
   p {
