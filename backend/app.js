@@ -32,6 +32,9 @@ const {authenticationMiddleware} = require('./middleware/authentication');
 app.use('/api/v1/persons', authenticationMiddleware, personsRoutes);
 app.use('/api/v1/posts', authenticationMiddleware, postsRoutes);
 app.use('/api/v1/channels', authenticationMiddleware, channelsRoutes);
+app.use('', (req, res)=> {
+	return res.json({message: 'Server works'});
+});
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
