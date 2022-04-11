@@ -12,8 +12,8 @@
 
 ## Links 
  
-- git repository ()[]
-- Live demo ()[]
+- Git repository: [link]()
+- Live demo: [link](https://deft-griffin-b062df.netlify.app)
 
 ## Screenshots
 

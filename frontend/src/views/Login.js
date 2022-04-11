@@ -1,5 +1,9 @@
 import LoginWrapper from 'components/Login/LoginWrapper/LoginWrapper';
-import { StyledForm, LoginParapgraph } from './Signup/Signup.styles';
+import {
+  StyledForm,
+  LoginParapgraph,
+  DefaultCredential,
+} from './Signup/Signup.styles';
 import { useForm } from 'react-hook-form';
 import FormField from 'components/Login/FormField/FormField';
 import Button from 'components/Common/Button/Button';
@@ -37,43 +41,52 @@ const Login = () => {
   };
 
   return (
-    <LoginWrapper header="Login">
-      <StyledForm onSubmit={handleSubmit(onSubmit)}>
-        <FormField
-          label="email"
-          options={{
-            required: 'Email is required',
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: 'invalid email address',
-            },
-          }}
-          error={errors.email?.message}
-          register={register}
-          icon="envelope"
-        ></FormField>
+    <>
+      <LoginWrapper header="Login">
+        <StyledForm onSubmit={handleSubmit(onSubmit)}>
+          <FormField
+            label="email"
+            options={{
+              required: 'Email is required',
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: 'invalid email address',
+              },
+            }}
+            error={errors.email?.message}
+            register={register}
+            icon="envelope"
+          ></FormField>
 
-        <FormField
-          label="password"
-          type="password"
-          options={{ required: 'Password is required' }}
-          error={errors.password?.message}
-          register={register}
-          icon="lock"
-        ></FormField>
+          <FormField
+            label="password"
+            type="password"
+            options={{ required: 'Password is required' }}
+            error={errors.password?.message}
+            register={register}
+            icon="lock"
+          ></FormField>
 
-        <Button type="submit">Login</Button>
-        {errorMessage ? (
-          <LoginErrorMessage>{errorMessage}</LoginErrorMessage>
-        ) : null}
-      </StyledForm>
+          <Button type="submit">Login</Button>
+          {errorMessage ? (
+            <LoginErrorMessage>{errorMessage}</LoginErrorMessage>
+          ) : null}
+        </StyledForm>
 
-      <SocialsBox />
+        <SocialsBox />
 
-      <LoginParapgraph>
-        Don’t have an account yet? <Link to="/signup">Register</Link>
-      </LoginParapgraph>
-    </LoginWrapper>
+        <LoginParapgraph>
+          Don’t have an account yet? <Link to="/signup">Register</Link>
+        </LoginParapgraph>
+        <DefaultCredential>
+          <span>
+            email: guest@gmail.com
+            <br />
+            password: guest123
+          </span>
+        </DefaultCredential>
+      </LoginWrapper>
+    </>
   );
 };
 

@@ -25,3 +25,9 @@ export const LoginParapgraph = styled.p`
     color: ${({ theme }) => theme.color.blue500};
   }
 `;
+
+export const DefaultCredential = styled.div`
+  margin-top: 20px;
+  color: ${({ theme }) => theme.color.grey500};
+  text-align: center;
+`;
