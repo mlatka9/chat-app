@@ -89,3 +89,8 @@ export const Member = styled.li`
     }
   }
 `;
+
+export const MemberList = styled.div`
+  height: calc(${({ innerHeight }) => innerHeight + 'px'} - 450px);
+  overflow: auto;
+`;

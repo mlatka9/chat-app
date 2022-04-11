@@ -12,7 +12,7 @@
 
 ## Links 
  
-- Git repository: [link]()
+- Git repository: [link](https://github.com/mlatka9/chat-app)
 - Live demo: [link](https://deft-griffin-b062df.netlify.app)
 
 ## Screenshots

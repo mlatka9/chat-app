@@ -7,14 +7,15 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-
   @media (max-width: 1000px) {
-    padding: 50px 50px;
+    padding: 50px 20px;
   }
-
   h2,
   p {
     max-width: 500px;
+    @media (max-width: 1000px) {
+      max-width: 300px;
+    }
   }
   h2 {
     font-size: 50px;
@@ -24,7 +25,8 @@ const Wrapper = styled.div`
     line-height: 50px;
     margin-bottom: 50px;
     @media (max-width: 1000px) {
-      font-size: 38px;
+      font-size: 32px;
+      line-height: 40px;
     }
   }
   p {
@@ -32,8 +34,8 @@ const Wrapper = styled.div`
     color: ${({ theme }) => theme.color.grey500};
     line-height: 40px;
     @media (max-width: 900px) {
-      font-size: 20px;
-      line-height: 30px;
+      font-size: 18px;
+      line-height: 25px;
     }
   }
 `;

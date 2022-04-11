@@ -6,14 +6,17 @@ import {
   StyledHeader,
   AsideContent,
   Member,
+  MemberList,
 } from './SelectedChannel.styles';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { SelectedChannelSkeleton } from 'components/Common/Loaders/SkeletonLoading/SkeletonLoaders';
+import useWindowDimensions from 'hooks/useWindowDimensions';
 
 const SelectedChannel = ({ joinedChannel, setIsAllChannelsSelected }) => {
   const params = useParams();
   const channel = useSelector((state) => state.channel[params.id]);
+  const { height } = useWindowDimensions();
 
   const handleBackToAllChannels = () => {
     setIsAllChannelsSelected(true);
@@ -47,7 +50,7 @@ const SelectedChannel = ({ joinedChannel, setIsAllChannelsSelected }) => {
         </ChannelInfo>
         <MembersListWrapper>
           <h2>members</h2>
-          <ul>
+          <MemberList innerHeight={height}>
             {channel.members.map((member) => (
               <Member key={member.id}>
                 <img
@@ -60,7 +63,7 @@ const SelectedChannel = ({ joinedChannel, setIsAllChannelsSelected }) => {
                 ) : null}
               </Member>
             ))}
-          </ul>
+          </MemberList>
         </MembersListWrapper>
       </AsideContent>
     </>

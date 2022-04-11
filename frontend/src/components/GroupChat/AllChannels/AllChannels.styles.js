@@ -50,7 +50,7 @@ export const StyledInput = styled.input`
 
 export const List = styled.ul`
   padding: 5px;
-  height: calc(100vh - 350px);
+  height: calc(${({ innerheight }) => innerheight + 'px'} - 350px);
   overflow-y: auto;
   a {
     display: block;

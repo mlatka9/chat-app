@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import { getChannels } from 'redux/channelSlice';
 import AddNewChannel from '../AddNewChannel/AddNewChannel';
 import { AllChannelsSkeleton } from 'components/Common/Loaders/SkeletonLoading/SkeletonLoaders';
+import useWindowDimensions from 'hooks/useWindowDimensions';
 
 const AllChannels = ({ setIsAllChannelsSelected }) => {
   const [isAllChannelsLoading, setIsAllChannelsLoading] = useState(true);
@@ -20,6 +21,7 @@ const AllChannels = ({ setIsAllChannelsSelected }) => {
   const dispatch = useDispatch();
   const [isAddChannelFormOpen, setIsAddChannelOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const { height } = useWindowDimensions();
 
   const handleCloseForm = () => {
     setIsAddChannelOpen(false);
@@ -59,7 +61,7 @@ const AllChannels = ({ setIsAllChannelsSelected }) => {
           />
           <FontAwesomeIcon icon={['fa', 'magnifying-glass']} />
         </InputWrapper>
-        <List>
+        <List innerHeight={height}>
           {isAllChannelsLoading ? (
             <AllChannelsSkeleton />
           ) : (
