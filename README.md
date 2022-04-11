@@ -1,5 +1,15 @@
 # Full-stack chat application created with React.js, Express.js and MongoDB.
 
+## Preview
+
+![s0](https://user-images.githubusercontent.com/72691985/162732412-bc185038-35a8-4d4e-ac6c-7e07eb2fd341.PNG)
+
+## Links 
+ 
+-  [live demo](https://deft-griffin-b062df.netlify.app)
+-  [repository](https://github.com/mlatka9/chat-app)
+
+
 ## Users is able to:
 
 - create new account via email or google account
@@ -9,13 +19,6 @@
 - make conversation with other channel members
 - see others member's messages instantly without page reloading
 - set dark or light theme mode 
-
-## Links 
- 
-- git repository ()[]
-- Live demo ()[]
-
-## Screenshots
 
 ## Built with
 - React.js
