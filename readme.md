@@ -12,8 +12,8 @@
 
 ## Links 
  
-- git repository [link](https://github.com/mlatka9/chat-app)
-- Live demo: [link](https://deft-griffin-b062df.netlify.app/login)
+- git repository ()[]
+- Live demo ()[]
 
 ## Screenshots
 
