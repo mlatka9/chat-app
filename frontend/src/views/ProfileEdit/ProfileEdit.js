@@ -25,6 +25,7 @@ import ErrorMessage from 'components/Profile/ErrorMessage/ErrorMessage';
 const ProfileEdit = () => {
   const { currentUser, updateUserProfile, userDetails, reAuthUser } = useAuth();
   const [isUpdating, setIsUpdating] = useState(false);
+  const [temporaryPhoto, setTemporaryPhoto] = useState(null);
   const navigate = useNavigate();
 
   const [reauthPopupOpen, setReauthpopupOpen] = useState(false);
@@ -34,6 +35,7 @@ const ProfileEdit = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    trigger
   } = useForm({
     defaultValues: {
       name: userDetails?.name,
@@ -76,6 +78,20 @@ const ProfileEdit = () => {
     return photo[0].size < 2097152;
   };
 
+  const onImageChange = async (e) => {
+  
+    const [file] = e.target.files;
+
+
+    // const result = await trigger('photo');
+
+    const validationResult = validatePhoto(e.target.files);
+
+    if(validationResult) {
+      setTemporaryPhoto(URL.createObjectURL(file));
+    }
+  };
+
   const isUserCreatedByEmail =
     currentUser?.providerData[0].providerId === 'password';
   return (
@@ -93,7 +109,7 @@ const ProfileEdit = () => {
           </InfoHeader>
           <ChangePhoto>
             <img
-              src={userDetails?.photoURL || imagePlaceholder}
+              src={temporaryPhoto || userDetails?.photoURL || imagePlaceholder}
               alt={currentUser.email}
             />
             <FileInputWrapper>
@@ -104,7 +120,7 @@ const ProfileEdit = () => {
                 type="file"
                 id="avatar"
                 accept="image/*"
-                {...(isUpdating ? { onChange: () => {} } : {})}
+                {...(isUpdating ? { onChange: () => { } } : { onChange: (e) => onImageChange(e) })}
                 disabled={isUpdating}
               ></input>
 
