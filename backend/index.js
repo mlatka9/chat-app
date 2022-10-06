@@ -8,7 +8,7 @@ initializeSocket(httpServer);
 
 const PORT = process.env.PORT || 5000;
 
-http.listen(PORT, () => {
+httpServer.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
 });
 
