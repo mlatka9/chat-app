@@ -13,6 +13,7 @@ export const ProfilePhoto = styled.img`
   border-radius: 5px;
   width: ${({ isBigger }) => (isBigger ? '42px' : '32px')};
   height: ${({ isBigger }) => (isBigger ? '42px' : '32px')};
+  object-fit: cover;
 `;
 
 export const ProfileName = styled.span`

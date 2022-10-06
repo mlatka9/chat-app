@@ -49,6 +49,7 @@ export const ChangePhoto = styled.div`
     width: 72px;
     border-radius: 8px;
     margin-bottom: 10px;
+    object-fit: cover;
   }
   input {
     opacity: 0;

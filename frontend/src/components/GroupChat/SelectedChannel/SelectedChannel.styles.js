@@ -94,6 +94,9 @@ export const Member = styled.li`
       fill: ${({ theme }) => theme.color.yellow600};
     }
   }
+  img {
+    object-fit: cover;
+  }
 `;
 
 export const MemberList = styled.div`

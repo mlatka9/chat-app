@@ -1,10 +1,10 @@
-import EditField from "components/Profile/EditField/EditField";
-import InfoHeader from "components/Profile/InfoHeader/InfoHeader";
-import Button from "components/Common/Button/Button";
-import Header from "components/Header/Header";
-import useAuth from "hooks/useAuth";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import EditField from 'components/Profile/EditField/EditField';
+import InfoHeader from 'components/Profile/InfoHeader/InfoHeader';
+import Button from 'components/Common/Button/Button';
+import Header from 'components/Header/Header';
+import useAuth from 'hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import {
   ChangePhoto,
   EditWrapper,
@@ -14,13 +14,13 @@ import {
   ProfileEditWrapper,
   StyledSpan,
   PhotoName,
-} from "./ProfileEdit.styles";
-import { useForm } from "react-hook-form";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import imagePlaceholder from "assets/image-placeholder.jpeg";
-import ReauthenticatePopUp from "components/Profile/ReauthenticatePopUp/ReauthenticatePopUp";
-import { CustomFirebaseError } from "errors/CustomFirebaseError";
-import ErrorMessage from "components/Profile/ErrorMessage/ErrorMessage";
+} from './ProfileEdit.styles';
+import { useForm } from 'react-hook-form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import imagePlaceholder from 'assets/image-placeholder.jpeg';
+import ReauthenticatePopUp from 'components/Profile/ReauthenticatePopUp/ReauthenticatePopUp';
+import { CustomFirebaseError } from 'errors/CustomFirebaseError';
+import ErrorMessage from 'components/Profile/ErrorMessage/ErrorMessage';
 
 const ProfileEdit = () => {
   const { currentUser, updateUserProfile, userDetails, reAuthUser } = useAuth();
@@ -35,22 +35,21 @@ const ProfileEdit = () => {
     handleSubmit,
     formState: { errors },
     watch,
-    trigger
   } = useForm({
     defaultValues: {
       name: userDetails?.name,
       bio: userDetails?.bio,
       phone: userDetails?.phoneNumber,
       email: currentUser?.email,
-      password: "",
+      password: '',
     },
   });
 
-  const watchPhoto = watch("photo", {});
+  const watchPhoto = watch('photo', {});
 
   useEffect(() => {
     if (!currentUser) {
-      navigate("/login");
+      navigate('/login');
     }
   }, [currentUser, navigate]);
 
@@ -79,23 +78,17 @@ const ProfileEdit = () => {
   };
 
   const onImageChange = async (e) => {
-  
     const [file] = e.target.files;
-
-
-    // const result = await trigger('photo');
 
     const validationResult = validatePhoto(e.target.files);
 
-    if(validationResult) {
+    if (validationResult) {
       setTemporaryPhoto(URL.createObjectURL(file));
     }
   };
 
   const isUserCreatedByEmail =
-    currentUser?.providerData[0].providerId === "password";
-
-  const draftImage = watchPhoto[0] ? URL.createObjectURL(watchPhoto[0]) : null;
+    currentUser?.providerData[0].providerId === 'password';
 
   return (
     <Wrapper>
@@ -117,13 +110,15 @@ const ProfileEdit = () => {
             />
             <FileInputWrapper>
               <input
-                {...register("photo", {
+                {...register('photo', {
                   validate: validatePhoto,
                 })}
                 type="file"
                 id="avatar"
                 accept="image/*"
-                {...(isUpdating ? { onChange: () => { } } : { onChange: (e) => onImageChange(e) })}
+                {...(isUpdating
+                  ? { onChange: () => {} }
+                  : { onChange: (e) => onImageChange(e) })}
                 disabled={isUpdating}
               ></input>
 
@@ -133,16 +128,22 @@ const ProfileEdit = () => {
             {watchPhoto.length > 0 ? (
               <PhotoName>{watchPhoto[0].name}</PhotoName>
             ) : null}
-            {errors.photo?.type === "validate" && (
+            {errors.photo?.type === 'validate' && (
               <ErrorMessage>Photo max size is 2MB</ErrorMessage>
             )}
           </ChangePhoto>
-          <EditField label="name" register={register} isUpdating={isUpdating} options={{
+          <EditField
+            label="name"
+            register={register}
+            isUpdating={isUpdating}
+            options={{
               minLength: {
                 message: 'Minumum length is 3 characters',
                 value: 3,
               },
-            }} error={errors.name?.message}/>
+            }}
+            error={errors.name?.message}
+          />
           <EditField
             label="bio"
             register={register}
@@ -169,10 +170,10 @@ const ProfileEdit = () => {
                 register={register}
                 error={errors.email?.message}
                 options={{
-                  required: "Email is required",
+                  required: 'Email is required',
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "invalid email address",
+                    message: 'invalid email address',
                   },
                 }}
                 isUpdating={isUpdating}
@@ -185,7 +186,7 @@ const ProfileEdit = () => {
                 options={{
                   minLength: {
                     value: 6,
-                    message: "password must have at least 6 characters",
+                    message: 'password must have at least 6 characters',
                   },
                 }}
                 isUpdating={isUpdating}

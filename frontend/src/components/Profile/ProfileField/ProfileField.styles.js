@@ -24,6 +24,7 @@ export const Wrapper = styled.div`
     height: 72px;
     width: 72px;
     border-radius: 8px;
+    object-fit: cover;
   }
 `;
 

@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import useAuth from '../../hooks/useAuth';
-import styled from 'styled-components';
-
 import LoginWrapper from 'components/Login/LoginWrapper/LoginWrapper';
 import { useForm } from 'react-hook-form';
 import FormField from 'components/Login/FormField/FormField';
