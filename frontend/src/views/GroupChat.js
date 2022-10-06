@@ -1,4 +1,3 @@
-import React from 'react';
 import useAuth from 'hooks/useAuth';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
@@ -66,6 +65,7 @@ const GroupChat = () => {
           navigate('');
         }
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id]);
 
   useEffect(() => {
