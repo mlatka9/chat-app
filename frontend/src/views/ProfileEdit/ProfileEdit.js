@@ -1,10 +1,10 @@
-import EditField from 'components/Profile/EditField/EditField';
-import InfoHeader from 'components/Profile/InfoHeader/InfoHeader';
-import Button from 'components/Common/Button/Button';
-import Header from 'components/Header/Header';
-import useAuth from 'hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import EditField from "components/Profile/EditField/EditField";
+import InfoHeader from "components/Profile/InfoHeader/InfoHeader";
+import Button from "components/Common/Button/Button";
+import Header from "components/Header/Header";
+import useAuth from "hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
   ChangePhoto,
   EditWrapper,
@@ -14,13 +14,13 @@ import {
   ProfileEditWrapper,
   StyledSpan,
   PhotoName,
-} from './ProfileEdit.styles';
-import { useForm } from 'react-hook-form';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import imagePlaceholder from 'assets/image-placeholder.jpeg';
-import ReauthenticatePopUp from 'components/Profile/ReauthenticatePopUp/ReauthenticatePopUp';
-import { CustomFirebaseError } from 'errors/CustomFirebaseError';
-import ErrorMessage from 'components/Profile/ErrorMessage/ErrorMessage';
+} from "./ProfileEdit.styles";
+import { useForm } from "react-hook-form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import imagePlaceholder from "assets/image-placeholder.jpeg";
+import ReauthenticatePopUp from "components/Profile/ReauthenticatePopUp/ReauthenticatePopUp";
+import { CustomFirebaseError } from "errors/CustomFirebaseError";
+import ErrorMessage from "components/Profile/ErrorMessage/ErrorMessage";
 
 const ProfileEdit = () => {
   const { currentUser, updateUserProfile, userDetails, reAuthUser } = useAuth();
@@ -40,15 +40,15 @@ const ProfileEdit = () => {
       bio: userDetails?.bio,
       phone: userDetails?.phoneNumber,
       email: currentUser?.email,
-      password: '',
+      password: "",
     },
   });
 
-  const watchPhoto = watch('photo', {});
+  const watchPhoto = watch("photo", {});
 
   useEffect(() => {
     if (!currentUser) {
-      navigate('/login');
+      navigate("/login");
     }
   }, [currentUser, navigate]);
 
@@ -77,7 +77,10 @@ const ProfileEdit = () => {
   };
 
   const isUserCreatedByEmail =
-    currentUser?.providerData[0].providerId === 'password';
+    currentUser?.providerData[0].providerId === "password";
+
+  const draftImage = watchPhoto[0] ? URL.createObjectURL(watchPhoto[0]) : null;
+
   return (
     <Wrapper>
       <Header />
@@ -93,12 +96,12 @@ const ProfileEdit = () => {
           </InfoHeader>
           <ChangePhoto>
             <img
-              src={userDetails?.photoURL || imagePlaceholder}
+              src={draftImage || userDetails?.photoURL || imagePlaceholder}
               alt={currentUser.email}
             />
             <FileInputWrapper>
               <input
-                {...register('photo', {
+                {...register("photo", {
                   validate: validatePhoto,
                 })}
                 type="file"
@@ -114,11 +117,16 @@ const ProfileEdit = () => {
             {watchPhoto.length > 0 ? (
               <PhotoName>{watchPhoto[0].name}</PhotoName>
             ) : null}
-            {errors.photo?.type === 'validate' && (
+            {errors.photo?.type === "validate" && (
               <ErrorMessage>Photo max size is 2MB</ErrorMessage>
             )}
           </ChangePhoto>
-          <EditField label="name" register={register} isUpdating={isUpdating} />
+          <EditField label="name" register={register} isUpdating={isUpdating} options={{
+              minLength: {
+                message: 'Minumum length is 3 characters',
+                value: 3,
+              },
+            }} error={errors.name?.message}/>
           <EditField
             label="bio"
             register={register}
@@ -145,10 +153,10 @@ const ProfileEdit = () => {
                 register={register}
                 error={errors.email?.message}
                 options={{
-                  required: 'Email is required',
+                  required: "Email is required",
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: 'invalid email address',
+                    message: "invalid email address",
                   },
                 }}
                 isUpdating={isUpdating}
@@ -161,7 +169,7 @@ const ProfileEdit = () => {
                 options={{
                   minLength: {
                     value: 6,
-                    message: 'password must have at least 6 characters',
+                    message: "password must have at least 6 characters",
                   },
                 }}
                 isUpdating={isUpdating}
