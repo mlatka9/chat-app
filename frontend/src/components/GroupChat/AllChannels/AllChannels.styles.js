@@ -41,7 +41,6 @@ export const StyledInput = styled.input`
   border: none;
   font-size: ${({ theme }) => theme.fontSize.s};
   color: ${({ theme }) => theme.color.grey200};
-
   color: ${({ theme }) => theme.color.grey100};
   &::placeholder {
     color: ${({ theme }) => theme.color.grey400};
@@ -50,6 +49,10 @@ export const StyledInput = styled.input`
 
 export const List = styled.ul`
   padding: 5px;
+  padding-right: 32px;
+  @media (max-width: 650px) {
+    padding-right: 0px;
+  }
   height: calc(${({ innerheight }) => innerheight + 'px'} - 350px);
   overflow-y: auto;
   a {
@@ -97,8 +100,10 @@ export const ListItem = styled.li`
 export const InputWrapper = styled.div`
   position: relative;
   margin-bottom: 36px;
+  margin-right: 32px;
   @media (max-width: 650px) {
     margin-bottom: 20px;
+    margin-right: 0;
   }
   svg {
     position: absolute;

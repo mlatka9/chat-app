@@ -29,15 +29,21 @@ export const StyledHeader = styled.header`
 
 export const ChannelInfo = styled.div`
   color: ${({ theme }) => theme.color.grey200};
+  margin-right: 32px;
+  @media (max-width: 800px) {
+    margin-right: 0px;
+  }
   h2 {
     font-size: ${({ theme }) => theme.fontSize.l};
     text-transform: uppercase;
     font-weight: ${({ theme }) => theme.fontWeight.bold};
-    margin-bottom: 18px;
+    margin-bottom: 10px;
   }
   p {
-    font-size: ${({ theme }) => theme.fontSize.l};
-    margin-bottom: 45px;
+    max-height: 110px;
+    overflow: auto;
+    font-size: ${({ theme }) => theme.fontSize.m};
+    margin-bottom: 20px;
     line-height: 26px;
     @media (max-width: 800px) {
       font-size: ${({ theme }) => theme.fontSize.m};
@@ -72,7 +78,7 @@ export const MembersListWrapper = styled.div`
 `;
 
 export const AsideContent = styled.div`
-  padding: 0 32px 40px;
+  padding: 0 0 40px 32px;
   @media (max-width: 800px) {
     padding: 0 20px 30px;
   }
@@ -92,5 +98,9 @@ export const Member = styled.li`
 
 export const MemberList = styled.div`
   height: calc(${({ innerHeight }) => innerHeight + 'px'} - 450px);
+  margin-right: 32px;
   overflow: auto;
+  @media (max-width: 800px) {
+    margin-right: 0px;
+  }
 `;
