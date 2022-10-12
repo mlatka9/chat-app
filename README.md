@@ -6,8 +6,8 @@
 
 ## Links 
  
--  [live demo](https://deft-griffin-b062df.netlify.app)
--  [repository](https://github.com/mlatka9/chat-app)
+-  [live demo](https://chat-app-mlatka9.netlify.app/)
+-  [github repository](https://github.com/mlatka9/chat-app)
 
 
 ## Users is able to:
